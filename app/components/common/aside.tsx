@@ -142,7 +142,7 @@ function SidebarProvider({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [toggleSidebar]);
 
-  const state = open ? "expanded" : "collapsed";
+  const state: "expanded" | "collapsed" = open ? "expanded" : "collapsed";
 
   const contextValue = useMemo(
     () => ({
@@ -374,25 +374,25 @@ function SidebarGroup({ className, ...props }: ComponentProps<"div">) {
 }
 
 function SidebarMenu({ className, ...props }: ComponentProps<"ul">) {
-	return (
-		<ul
-			data-slot="sidebar-menu"
-			data-sidebar="menu"
-			className={cn("flex w-full min-w-0 flex-col gap-1", className)}
-			{...props}
-		/>
-	);
+  return (
+    <ul
+      data-slot="sidebar-menu"
+      data-sidebar="menu"
+      className={cn("flex w-full min-w-0 flex-col gap-1", className)}
+      {...props}
+    />
+  );
 }
 
 function SidebarMenuItem({ className, ...props }: ComponentProps<"li">) {
-	return (
-		<li
-			data-slot="sidebar-menu-item"
-			data-sidebar="menu-item"
-			className={cn("group/menu-item relative list-none", className)}
-			{...props}
-		/>
-	);
+  return (
+    <li
+      data-slot="sidebar-menu-item"
+      data-sidebar="menu-item"
+      className={cn("group/menu-item relative list-none", className)}
+      {...props}
+    />
+  );
 }
 
 export {
