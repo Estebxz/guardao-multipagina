@@ -1,4 +1,4 @@
-import { SignedIn, UserButton } from "@clerk/nextjs";
+import { SignedIn, UserAvatar } from "@clerk/nextjs";
 import GKeyCap from "@common/keycap";
 import Footer from "@shell/footer";
 
@@ -9,17 +9,7 @@ export default function LandingPage() {
         <section className="container mx-auto flex w-full max-w-2xl flex-col items-center justify-center text-center">
           <SignedIn>
             <div className="mb-6 flex items-center justify-center">
-              <UserButton
-                showName={true}
-                appearance={{
-                  elements: {
-                    userButtonAvatarBox: "!size-6",
-                    userButtonTrigger:
-                      "!flex !items-center !gap-2 !rounded !border !border-border !bg-background/60 !px-3 !py-2 !backdrop-blur-sm !hover:bg-muted !transition ",
-                    userButtonPopoverCard: "!shadow-xl !border !border-border",
-                  },
-                }}
-              />
+              <UserAvatar rounded={false}/>
             </div>
           </SignedIn>
 

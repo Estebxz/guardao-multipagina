@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="container mx-auto flex h-8 max-w-2xl items-center justify-between px-6">
         <div className="flex items-center gap-4 text-xs text-muted-foreground">
           <a
-            href=""
+            href="https://github.com/Estebxz/guardao-multipagina"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-foreground"
