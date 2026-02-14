@@ -20,7 +20,7 @@ export function NavLink({
     <Link
       href={href}
       className={cn(
-        "flex w-full items-center gap-2 text-white transition-colors",
+        "flex w-full items-center gap-2 transition-colors",
         isActive && "bg-accent",
         className,
       )}

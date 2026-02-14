@@ -3,6 +3,7 @@
 import { z } from "zod";
 import { auth } from "@clerk/nextjs/server";
 import { createServerSupabaseClient } from "@lib/client";
+import { revalidatePath } from "next/cache";
 
 const documentSchema = z.object({
   name: z.string().min(1, "El titulo es requerido"),
@@ -38,5 +39,23 @@ export async function addDocument(formData: FormData) {
     return { error: "Error al guardar documento" };
   }
 
+  return { success: true };
+}
+
+export async function deleteDocument(id: number) {
+  const { userId } = await auth();
+
+  if (!userId) {
+    return { error: "No autorizado" };
+  }
+
+  const client = createServerSupabaseClient();
+  const { error } = await client.from("tasks").delete().eq("id", id);
+
+  if (error) {
+    return { error: "Error al eliminar documento" };
+  }
+
+  revalidatePath("/items");
   return { success: true };
 }

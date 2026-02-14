@@ -275,6 +275,20 @@ function Sidebar({
   );
 }
 
+function SidebarContent({ className, ...props }: ComponentProps<"div">) {
+	return (
+		<div
+			data-slot="sidebar-content"
+			data-sidebar="content"
+			className={cn(
+				"flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
+				className,
+			)}
+			{...props}
+		/>
+	);
+}
+
 function SidebarHeader({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
@@ -356,7 +370,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <PanelLeftIcon />
+      <PanelLeftIcon className="fill-foreground"/>
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   );
@@ -395,8 +409,34 @@ function SidebarMenuItem({ className, ...props }: ComponentProps<"li">) {
   );
 }
 
+function SidebarRail({ className, ...props }: ComponentProps<"button">) {
+	const { toggleSidebar } = useSidebar();
+
+	return (
+		<button
+			data-sidebar="rail"
+			data-slot="sidebar-rail"
+			aria-label="Toggle Sidebar"
+			tabIndex={-1}
+			onClick={toggleSidebar}
+			title="Toggle Sidebar"
+			className={cn(
+				"-translate-x-1/2 group-data-[side=left]:-right-4 absolute inset-y-0 z-20 hidden w-4 transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-0.5 hover:after:bg-sidebar-border group-data-[side=right]:left-0 sm:flex",
+				"in-data-[side=left]:cursor-w-resize in-data-[side=right]:cursor-e-resize",
+				"[[data-side=left][data-state=collapsed]_&]:cursor-e-resize [[data-side=right][data-state=collapsed]_&]:cursor-w-resize",
+				"group-data-[collapsible=offcanvas]:translate-x-0 hover:group-data-[collapsible=offcanvas]:bg-sidebar group-data-[collapsible=offcanvas]:after:left-full",
+				"[[data-side=left][data-collapsible=offcanvas]_&]:-right-2",
+				"[[data-side=right][data-collapsible=offcanvas]_&]:-left-2",
+				className,
+			)}
+			{...props}
+		/>
+	);
+}
+
 export {
   Sidebar,
+  SidebarContent,
   SidebarHeader,
   SidebarMenuButton,
   SidebarProvider,
@@ -405,4 +445,5 @@ export {
   SidebarMenu,
   SidebarMenuItem,
   SidebarTrigger,
+  SidebarRail
 };

@@ -2,24 +2,28 @@
 import Link from "next/link";
 import {
   Sidebar,
+  SidebarContent,
   SidebarHeader,
   SidebarMenuButton,
   SidebarTrigger,
   SidebarGroup,
   SidebarMenu,
   SidebarMenuItem,
+  SidebarRail
 } from "./aside";
-import { cn } from "@/app/lib/utils";
+import { cn } from "@lib/utils";
 import Image from "next/image";
 import { PanelRightIcon } from "@ico/panel-right";
 import { TooltipProvider } from "./tooltip";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { GridIcon } from "@ico/grid";
-import { PlusIcon } from "../icons/plus";
-import { NavLink } from "./nav-link";
+import { PlusIcon } from "@ico/plus";
+import { usePathname } from "next/navigation";
+import { ArchiveBoxIcon } from "../icons/archive-box";
+
 
 function MinimalSidebar() {
-  
+  const pathname = usePathname();
   return (
     <TooltipProvider>
       <Sidebar
@@ -29,97 +33,136 @@ function MinimalSidebar() {
         <SidebarHeader className="flex w-full flex-row justify-between group-data-[collapsible=icon]:flex-col">
           <div className="flex items-center gap-2">
             <Link
-              href={"/"}
+              href="/"
               className={cn(
                 "flex items-center gap-2",
                 "group-data-[collapsible=icon]:flex-col",
               )}
-              aria-label="Texto Logotipo"
+              aria-label="Inicio"
             >
-              <div className="flex items-center justify-center rounded-lg p-2 transition-colors duration-150">
+              <div className="flex items-center justify-center rounded-lg bg-foreground p-2 transition-colors duration-150 hover:bg-foreground/80">
                 <Image
-                  src={"/favicon.svg"}
+                  src="/favicon.svg"
                   alt="Logo mark"
                   width={40}
                   height={40}
+                  className={cn(
+                    "h-4 w-4 text-primary",
+                    "group-data-[collapsible=icon]:h-4 group-data-[collapsible=icon]:w-4",
+                  )}
                 />
               </div>
-              <span className="group-data-[collapsible=icon]:hidden text-foreground font-fusion text-2xl">
-                GUARDAO
+              <span className="group-data-[collapsible=icon]:hidden">
+                <Image src="/text-logo.svg" alt="Logo mark" width={100} height={100} />
               </span>
             </Link>
           </div>
           <SidebarMenuButton
-            tooltip="Abrir panel"
-            className="flex h-8 w-8 items-center justify-center"
+            tooltip="Abrir panel lateral"
+            className="flex size-8 items-center justify-center"
             asChild
           >
             <SidebarTrigger>
-              <PanelRightIcon className="size-6" />
+              <PanelRightIcon className="h-4 w-4" />
             </SidebarTrigger>
           </SidebarMenuButton>
         </SidebarHeader>
-        {/*navegacion*/}
-        <SidebarGroup className="flex-1">
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                className="flex w-full items-center gap-2 text-muted-foreground group-data-[collapsible=icon]:justify-center"
-                tooltip="Dashboard"
-                asChild
-              >
-                  <NavLink href="/dashboard" className="text-white hover:bg-accent">
-                  <GridIcon className="size-8 shrink-0"/>
-                  <span className="truncate group-data-[collapsible=icon]:hidden">Dashboard</span>
-                  </NavLink>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            {/**/}
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                className="flex w-full items-center gap-2 text-muted-foreground group-data-[collapsible=icon]:justify-center"
-                tooltip="Documentos"
-                asChild
-              >
-                <NavLink href="/doc" className="text-white hover:bg-accent">
-                  <PlusIcon className="size-8 shrink-0"/>
-                  <span className="truncate group-data-[collapsible=icon]:hidden">Documentos</span>
-                </NavLink>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarGroup>
-
-        <SidebarGroup className="mt-auto pb-2">
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SignedIn>
+        {/*Navegacion principal | Dashboard*/}
+        <SidebarContent className="flex-1 gap-0">
+          <SidebarGroup>
+            <SidebarMenu>
+              <SidebarMenuItem>
                 <SidebarMenuButton
-                  className="p-0! group-data-[collapsible=icon]:p-0! flex w-full items-center justify-start gap-2 text-foreground text-sm transition-colors hover:bg-muted/50"
-                  tooltip="User Profile"
                   asChild
+                  tooltip="Navegar al inicio"
+                  className="flex w-full items-center justify-start gap-2 px-2 py-1.5 text-sm group-data-[collapsible=icon]:justify-center"
                 >
-                  <UserButton showName={true} />
-                </SidebarMenuButton>
-              </SignedIn>
-              <SignedOut>
-                <SignInButton mode="modal">
-                  <SidebarMenuButton
-                    className={cn(
-                      "flex h-10 w-full items-center justify-center gap-1.5 rounded-sm px-2 py-1 font-medium text-base transition-colors duration-150",
-                      "active:bg-sidebar-accent/60! active:text-foreground! bg-sidebar-accent text-foreground hover:bg-sidebar-accent/80 hover:text-foreground",
-                      "group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-1 group-data-[collapsible=icon]:text-[10px]",
-                    )}
+                  <Link
+                    href="/dashboard"
+                    data-active={pathname === "/dashboard"}
+                    className="flex w-full items-center gap-2 text-muted-foreground group-data-[collapsible=icon]:justify-center"
                   >
-                    <span className="group-data-[collapsible=icon]:hidden">
-                      Sign In
+                    <GridIcon className="h-4 w-4 shrink-0" />
+                    <span className="truncate group-data-[collapsible=icon]:hidden">
+                      Inicio
                     </span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              {/*Nuevo documento*/} 
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  tooltip="Crear nuevo documento"
+                  className="flex w-full items-center justify-start gap-2 px-2 py-1.5 text-sm group-data-[collapsible=icon]:justify-center"
+                >
+                  <Link
+                    href="/doc"
+                    data-active={pathname === "/doc"}
+                    className="flex w-full items-center gap-2 text-muted-foreground group-data-[collapsible=icon]:justify-center"
+                  >
+                    <PlusIcon className="h-4 w-4 shrink-0" />
+                    <span className="truncate group-data-[collapsible=icon]:hidden">
+                      Nuevo documento
+                    </span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              {/* Ver documentos */}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  tooltip="Navegar a documentos"
+                  className="flex w-full items-center justify-start gap-2 px-2 py-1.5 text-sm group-data-[collapsible=icon]:justify-center"
+                >
+                  <Link
+                    href="/items"
+                    data-active={pathname === "/doc"}
+                    className="flex w-full items-center gap-2 text-muted-foreground group-data-[collapsible=icon]:justify-center"
+                  >
+                    <ArchiveBoxIcon className="h-4 w-4 shrink-0" />
+                    <span className="truncate group-data-[collapsible=icon]:hidden">
+                      Ver documentos
+                    </span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroup>
+
+          {/*Navegacion secundaria | Signout*/}
+          <SidebarGroup className="mt-auto pb-2">
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SignedIn>
+                  <SidebarMenuButton
+                    className="p-0! group-data-[collapsible=icon]:p-0! flex w-full items-center justify-start gap-2 text-foreground text-sm transition-colors hover:bg-muted/50"
+                    tooltip="User Profile"
+                    asChild
+                  >
+                    <UserButton showName={true} />
                   </SidebarMenuButton>
-                </SignInButton>
-              </SignedOut>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarGroup>
+                </SignedIn>
+                <SignedOut>
+                  <SignInButton mode="modal">
+                    <SidebarMenuButton
+                      className={cn(
+                        "flex h-10 w-full items-center justify-center gap-1.5 rounded-sm px-2 py-1 font-medium text-base transition-colors duration-150",
+                        "active:bg-sidebar-accent/60! active:text-foreground! bg-sidebar-accent text-foreground hover:bg-sidebar-accent/80 hover:text-foreground",
+                        "group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-1 group-data-[collapsible=icon]:text-[10px]",
+                      )}
+                    >
+                      <span className="group-data-[collapsible=icon]:hidden">
+                        Iniciar sesión
+                      </span>
+                    </SidebarMenuButton>
+                  </SignInButton>
+                </SignedOut>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroup>
+        </SidebarContent>
+        <SidebarRail />
       </Sidebar>
     </TooltipProvider>
   );

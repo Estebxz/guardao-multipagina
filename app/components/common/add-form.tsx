@@ -48,7 +48,7 @@ export default function AddTaskForm() {
         placeholder="Empieza a escribir..."
         value={description}
         onChange={(e) => setDescription(e.target.value)}
-        className="min-h-40 resize-none outline-none"
+        className="min-h-40 min-w-full resize-none outline-none"
         maxLength={500}
       />
 
@@ -64,7 +64,7 @@ export default function AddTaskForm() {
           type="submit"
           disabled={isPending}
           aria-label="guardar documento"
-          className="bg-accent text-primary-foreground px-4 py-2 rounded-md disabled:opacity-50"
+          className="bg-accent hover:bg-accent/80 text-primary-foreground px-4 py-2 rounded-md disabled:opacity-50"
         >
           {isPending ? "Guardando..." : "Guardar documento"}
         </Button>

@@ -1,24 +1,18 @@
 export const PanelLeftIcon = ({ className = "" }: { className?: string }) => {
   return (
     <svg
-      width="800px"
-      height="800px"
-      viewBox="0 0 21 21"
       xmlns="http://www.w3.org/2000/svg"
+      width={800}
+      height={800}
+      viewBox="0 0 32 32"
       className={className}
     >
-      <g
+      <title>open-panel-solid-left</title>
+      <path d="M28 4H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 22H12V6h16Z" />
+      <path
+        d="M0 0h32v32H0z"
         fill="none"
-        fillRule="evenodd"
-        stroke="#D9D9D9"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        transform="translate(3 3)"
-      >
-        <path d="m2.5.5h10c1.1045695 0 2 .8954305 2 2v10c0 1.1045695-.8954305 2-2 2h-10c-1.1045695 0-2-.8954305-2-2v-10c0-1.1045695.8954305-2 2-2z" />
-
-        <path d="m2.5 11.5v-8" />
-      </g>
+      />
     </svg>
-  );
+  )
 };

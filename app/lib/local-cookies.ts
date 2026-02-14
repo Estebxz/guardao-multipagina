@@ -1,0 +1,1 @@
+export const HIDE_ANNOUNCEMENT_BAR_STORAGE_KEY = "hide_announcement_bar";

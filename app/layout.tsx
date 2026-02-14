@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
+import { AnnouncementBar } from "@common/announcement-bar";
 
 export const metadata: Metadata = {
   title: "GUARDAO",
@@ -16,6 +17,7 @@ export default function RootLayout({
     <html lang="es">
       <body>
         <Providers>
+          <AnnouncementBar />
           {children}
         </Providers>
       </body>

@@ -9,7 +9,7 @@ export function StatusBar({ userName }: StatusBarProps) {
     <footer className="w-full border-border/40 border-t bg-background">
       <div className="flex h-8 w-full items-center justify-between px-4">
         <div className="text-muted-foreground text-xs items-center">
-          {user || userName} • GUARDAO
+          {user || userName} • <a href="/dashboard">GUARDAO</a>
         </div>
       </div>
     </footer>
