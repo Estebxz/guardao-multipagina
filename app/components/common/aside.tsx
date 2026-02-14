@@ -236,7 +236,6 @@ function Sidebar({
       data-side={side}
       data-slot="sidebar"
     >
-      {/* This is what handles the sidebar gap on desktop */}
       <div
         data-slot="sidebar-gap"
         className={cn(
@@ -308,7 +307,7 @@ function SidebarMenuButton({
   tooltip,
   className,
   ...props
-}: React.ComponentProps<"button"> & {
+}: ComponentProps<"button"> & {
   asChild?: boolean;
   isActive?: boolean;
   tooltip?: string | ComponentProps<typeof TooltipContent>;
@@ -322,7 +321,7 @@ function SidebarMenuButton({
       data-sidebar="menu-button"
       data-size={size}
       data-active={isActive}
-      className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
+      className={cn(sidebarMenuButtonVariants({ variant, size }), className, )}
       {...props}
     />
   );
@@ -419,12 +418,12 @@ function SidebarRail({ className, ...props }: ComponentProps<"button">) {
 			aria-label="Toggle Sidebar"
 			tabIndex={-1}
 			onClick={toggleSidebar}
-			title="Toggle Sidebar"
+			title="Panel lateral"
 			className={cn(
-				"-translate-x-1/2 group-data-[side=left]:-right-4 absolute inset-y-0 z-20 hidden w-4 transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-0.5 hover:after:bg-sidebar-border group-data-[side=right]:left-0 sm:flex",
+				"-translate-x-1/2 group-data-[side=left]:-right-4 absolute inset-y-0 z-20 hidden w-4 transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-0.5 hover:after:bg-white/30 group-data-[side=right]:left-0 sm:flex",
 				"in-data-[side=left]:cursor-w-resize in-data-[side=right]:cursor-e-resize",
 				"[[data-side=left][data-state=collapsed]_&]:cursor-e-resize [[data-side=right][data-state=collapsed]_&]:cursor-w-resize",
-				"group-data-[collapsible=offcanvas]:translate-x-0 hover:group-data-[collapsible=offcanvas]:bg-sidebar group-data-[collapsible=offcanvas]:after:left-full",
+				"group-data-[collapsible=offcanvas]:translate-x-0 hover:group-data-[collapsible=offcanvas]:bg-white group-data-[collapsible=offcanvas]:after:left-full",
 				"[[data-side=left][data-collapsible=offcanvas]_&]:-right-2",
 				"[[data-side=right][data-collapsible=offcanvas]_&]:-left-2",
 				className,

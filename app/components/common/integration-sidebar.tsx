@@ -9,7 +9,7 @@ import {
   SidebarGroup,
   SidebarMenu,
   SidebarMenuItem,
-  SidebarRail
+  SidebarRail,
 } from "./aside";
 import { cn } from "@lib/utils";
 import Image from "next/image";
@@ -21,11 +21,11 @@ import { PlusIcon } from "@ico/plus";
 import { usePathname } from "next/navigation";
 import { ArchiveBoxIcon } from "../icons/archive-box";
 
-
 function MinimalSidebar() {
   const pathname = usePathname();
+
   return (
-    <TooltipProvider>
+    <TooltipProvider delayDuration={0}>
       <Sidebar
         collapsible="icon"
         className="relative flex h-full flex-col border-border border-r text-foreground transition-all duration-300 ease-in-out bg-sidebar"
@@ -44,22 +44,27 @@ function MinimalSidebar() {
                 <Image
                   src="/favicon.svg"
                   alt="Logo mark"
-                  width={40}
-                  height={40}
+                  width={30}
+                  height={30}
                   className={cn(
-                    "h-4 w-4 text-primary",
+                    "h-4 w-4",
                     "group-data-[collapsible=icon]:h-4 group-data-[collapsible=icon]:w-4",
                   )}
                 />
               </div>
               <span className="group-data-[collapsible=icon]:hidden">
-                <Image src="/text-logo.svg" alt="Logo mark" width={100} height={100} />
+                <Image
+                  src="/text-logo.svg"
+                  alt="Logo mark"
+                  width={90}
+                  height={22}
+                />
               </span>
             </Link>
           </div>
           <SidebarMenuButton
             tooltip="Abrir panel lateral"
-            className="flex size-8 items-center justify-center"
+            className="flex size-8 items-center hover:bg-accent/80 justify-center"
             asChild
           >
             <SidebarTrigger>
@@ -75,7 +80,7 @@ function MinimalSidebar() {
                 <SidebarMenuButton
                   asChild
                   tooltip="Navegar al inicio"
-                  className="flex w-full items-center justify-start gap-2 px-2 py-1.5 text-sm group-data-[collapsible=icon]:justify-center"
+                  className="flex w-full items-center justify-start gap-2 px-2 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground group-data-[collapsible=icon]:justify-center"
                 >
                   <Link
                     href="/dashboard"
@@ -89,12 +94,12 @@ function MinimalSidebar() {
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-              {/*Nuevo documento*/} 
+              {/*Nuevo documento*/}
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
                   tooltip="Crear nuevo documento"
-                  className="flex w-full items-center justify-start gap-2 px-2 py-1.5 text-sm group-data-[collapsible=icon]:justify-center"
+                  className="flex w-full items-center justify-start gap-2 px-2 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground group-data-[collapsible=icon]:justify-center"
                 >
                   <Link
                     href="/doc"
@@ -113,7 +118,7 @@ function MinimalSidebar() {
                 <SidebarMenuButton
                   asChild
                   tooltip="Navegar a documentos"
-                  className="flex w-full items-center justify-start gap-2 px-2 py-1.5 text-sm group-data-[collapsible=icon]:justify-center"
+                  className="flex w-full items-center justify-start gap-2 px-2 py-1.5 text-sm text-muted-foreground hover:bg-accent/80 hover:text-foreground group-data-[collapsible=icon]:justify-center"
                 >
                   <Link
                     href="/items"
