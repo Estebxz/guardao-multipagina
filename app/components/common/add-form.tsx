@@ -4,6 +4,8 @@ import { useRef, useState, useTransition } from "react";
 import { addDocument } from "@/app/actions/actions";
 import { Button } from "./button";
 import { Input } from "./input";
+import { sileo } from "sileo";
+import { redirect } from "next/navigation";
 
 export default function AddTaskForm() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -12,7 +14,6 @@ export default function AddTaskForm() {
   const [error, setError] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-
   const [isPending, startTransition] = useTransition();
 
   function handleSubmit(formData: FormData) {
@@ -25,6 +26,16 @@ export default function AddTaskForm() {
         setError("");
         setTitle("");
         setDescription("");
+
+        sileo.success({
+          title: "Documento guardado",
+          description: "Se ha guardado el documento correctamente",
+          button: {
+            title: "Ver documento",
+            onClick: () => redirect(`/items`),
+          },
+          roundness: 5,
+        });
       }
     });
   }
