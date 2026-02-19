@@ -2,11 +2,12 @@
   <img src="./public/text-logo.svg" alt="Logo" />
 </p>
 
-_El proyecto tendra como funciones crear, alojar y descargar archivos planos(de momento) manteniendo seguridad_
+***Guardao*** *es una aplicación web multipágina diseñada para ofrecer una solución organizada, segura y estructurada para la gestión y almacenamiento de información. El proyecto nace con el objetivo de aplicar buenas prácticas de desarrollo frontend, arquitectura limpia y despliegue en la nube.*
 
-![texto](/public/capture.png)
+---
+![texto](/public/capture.webp)
 
 
-# Arquitectura
-![texto](/public/arquitecture.png)
+# ARQUITECTURA
+![texto](/public/diagram-arquitecture.webp)
 
