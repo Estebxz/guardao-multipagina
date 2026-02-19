@@ -1,22 +1,22 @@
 import type { Metadata } from "next";
 import { getSecureUser } from "@lib/auth/server";
-import { redirect } from "next/navigation";
 import { SidebarProvider } from "@common/aside";
 import MinimalSidebar from "@common/integration-sidebar";
-import { StatusBar } from "../components/common/status-bar";
+import { StatusBar } from "@common/status-bar";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "GUARDAO",
   description: "Dashboard interactivo solo para usuarios registrados",
 };
 
-export default function ProtectedLayout({
+export default async function ProtectedLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const user = getSecureUser();
+  const user = await getSecureUser();
 
   if (!user) {
-    redirect("sign-in");
+    redirect("/sign-in");
   }
 
   return (
@@ -30,7 +30,7 @@ export default function ProtectedLayout({
         <main className="relative flex flex-1 overflow-auto">
           <div className="flex h-full w-full flex-col">
             <div className="flex-1">{children}</div>
-            <StatusBar userName="" />
+            <StatusBar userName={user.fullName} />
           </div>
         </main>
       </div>
