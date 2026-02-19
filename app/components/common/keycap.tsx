@@ -2,7 +2,7 @@
 
 import { SpinnerIcon } from "@ico/spinner";
 import { useIsMobile } from "@hooks/use-mobile";
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback, FC } from "react";
 import { cn } from "@lib/utils";
 import { useRouter } from "next/navigation";
 
@@ -12,7 +12,7 @@ interface KeyProps {
   onPress: () => void;
 }
 
-const Key: React.FC<KeyProps> = ({ char, active, onPress }) => {
+const Key: FC<KeyProps> = ({ char, active, onPress }) => {
   return (
     <div
       className={cn("key", active && "active")}
@@ -47,7 +47,7 @@ const useSound = (url: string) => {
   };
 };
 
-const GKeyCap: React.FC = () => {
+const GKeyCapClient: FC = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const play = useSound("/keytype.mp3");
@@ -93,4 +93,4 @@ const GKeyCap: React.FC = () => {
   );
 };
 
-export default GKeyCap;
+export default GKeyCapClient;

@@ -5,7 +5,7 @@ import { addDocument } from "@/app/actions/actions";
 import { Button } from "./button";
 import { Input } from "./input";
 import { sileo } from "sileo";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/router";
 
 export default function AddTaskForm() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -15,11 +15,12 @@ export default function AddTaskForm() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   function handleSubmit(formData: FormData) {
     startTransition(async () => {
       const res = await addDocument(formData);
-
+      
       if (res?.error) {
         setError(res.error);
       } else {
@@ -32,7 +33,9 @@ export default function AddTaskForm() {
           description: "Se ha guardado el documento correctamente",
           button: {
             title: "Ver documento",
-            onClick: () => redirect(`/items`),
+            onClick: () => {
+              router.push("/items");
+            },
           },
           roundness: 5,
         });

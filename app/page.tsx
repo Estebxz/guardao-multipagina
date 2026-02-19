@@ -1,6 +1,7 @@
 import { SignedIn, UserAvatar } from "@clerk/nextjs";
-import GKeyCap from "@common/keycap";
 import Footer from "@shell/footer";
+import GKeyCapClient from "@common/keycap";
+import Image from "next/image";
 
 export default function LandingPage() {
   return (
@@ -9,14 +10,18 @@ export default function LandingPage() {
         <section className="container mx-auto flex w-full max-w-2xl flex-col items-center justify-center text-center">
           <SignedIn>
             <div className="mb-6 flex items-center justify-center">
-              <UserAvatar rounded={false}/>
+              <UserAvatar rounded={false} />
             </div>
           </SignedIn>
 
           <header className="mb-10 flex flex-col items-center gap-3">
-            <h1 className="font-fusion text-6xl sm:text-7xl md:text-8xl tracking-tight">
-              GUARDAO
-            </h1>
+            <Image
+              src="/text-logo.svg"
+              alt="Guardao"
+              width={300}
+              height={100}
+              priority
+            />
 
             <p className="max-w-xl font-mono text-sm sm:text-base leading-relaxed text-muted-foreground uppercase">
               Aloja, crea y descarga archivos de manera rápida y segura,
@@ -39,7 +44,7 @@ export default function LandingPage() {
           </div>
 
           <div className="mt-10">
-            <GKeyCap />
+            <GKeyCapClient />
           </div>
         </section>
       </main>

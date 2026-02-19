@@ -1,26 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useSyncExternalStore } from "react";
 import { Button } from "@common/button";
 import { XIcon } from "@ico/escape";
 import { HIDE_ANNOUNCEMENT_BAR_STORAGE_KEY } from "@lib/local-cookies";
 
 export function AnnouncementBar() {
-  const [showAnnouncement, setShowAnnouncement] = useState(() => {
-    if (typeof window === "undefined") return true;
-
-    try {
-      const hidden = window.localStorage.getItem(
-        HIDE_ANNOUNCEMENT_BAR_STORAGE_KEY,
-      );
-      return hidden !== "true";
-    } catch {
-      return true;
-    }
-  });
+  const showAnnouncement = useSyncExternalStore(
+    () => {
+      return () => {};
+    },
+    () => {
+      try {
+        const hidden = window.localStorage.getItem(
+          HIDE_ANNOUNCEMENT_BAR_STORAGE_KEY,
+        );
+        return hidden !== "true";
+      } catch {
+        return true;
+      }
+    },
+    () => true,
+  );
 
   const handleDismiss = () => {
-    setShowAnnouncement(false);
     try {
       window.localStorage.setItem(HIDE_ANNOUNCEMENT_BAR_STORAGE_KEY, "true");
     } catch {
