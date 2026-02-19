@@ -5,7 +5,7 @@ import { addDocument } from "@/app/actions/actions";
 import { Button } from "./button";
 import { Input } from "./input";
 import { sileo } from "sileo";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function AddTaskForm() {
   const inputRef = useRef<HTMLInputElement>(null);
