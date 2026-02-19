@@ -1,5 +1,4 @@
-import { GithubIcon } from "../icons/github";
-import { LinkedinIcon } from "../icons/linkedin";
+import { UseIcon } from "@hooks/use-icons";
 
 export default function Footer() {
   return (
@@ -12,7 +11,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="hover:text-foreground"
           >
-            <GithubIcon className="size-3.5" />
+            <UseIcon name="github" className="size-3.5" />
           </a>
 
           <a
@@ -21,7 +20,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="hover:text-foreground"
           >
-            <LinkedinIcon className="size-3.5" />
+            <UseIcon name="linkedin" className="size-3.5" />
           </a>
         </div>
 

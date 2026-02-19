@@ -3,7 +3,7 @@
 import { useMemo, useState, useTransition } from "react";
 import { Card, CardDescription, CardHeader, CardTitle } from "@common/card";
 import { Button } from "@common/button";
-import { TrashIcon } from "@ico/trash";
+import { UseIcon } from "@hooks/use-icons";
 import { deleteDocument } from "@/app/actions/actions";
 import { useRouter } from "next/navigation";
 import { sileo } from "sileo";
@@ -92,7 +92,7 @@ export default function DocumentCard({
             });
           }}
         >
-          <TrashIcon />
+          <UseIcon name="trash" className="size-3 fill-transparent"/>
           Eliminar
         </Button>
       </CardHeader>

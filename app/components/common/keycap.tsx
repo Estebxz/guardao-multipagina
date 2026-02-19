@@ -1,6 +1,6 @@
 "use client";
 
-import { SpinnerIcon } from "@ico/spinner";
+import { UseIcon } from "@hooks/use-icons";
 import { useIsMobile } from "@hooks/use-mobile";
 import { useEffect, useState, useRef, useCallback, FC } from "react";
 import { cn } from "@lib/utils";
@@ -24,7 +24,7 @@ const Key: FC<KeyProps> = ({ char, active, onPress }) => {
       <div className="side" />
       <div className="top">
         {active ? (
-          <SpinnerIcon className="char size-10 animate-spin" />
+          <UseIcon name="spinner" className="char size-10 animate-spin" />
         ) : (
           <div className="char">{char}</div>
         )}

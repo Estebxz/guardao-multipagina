@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import {
   Sidebar,
@@ -13,13 +14,10 @@ import {
 } from "./aside";
 import { cn } from "@lib/utils";
 import Image from "next/image";
-import { PanelRightIcon } from "@ico/panel-right";
 import { TooltipProvider } from "./tooltip";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
-import { GridIcon } from "@ico/grid";
-import { PlusIcon } from "@ico/plus";
 import { usePathname } from "next/navigation";
-import { ArchiveBoxIcon } from "../icons/archive-box";
+import { UseIcon } from "@hooks/use-icons";
 
 function MinimalSidebar() {
   const pathname = usePathname();
@@ -68,7 +66,7 @@ function MinimalSidebar() {
             asChild
           >
             <SidebarTrigger>
-              <PanelRightIcon className="h-4 w-4" />
+              <UseIcon name="panel-right" className="size-4" />
             </SidebarTrigger>
           </SidebarMenuButton>
         </SidebarHeader>
@@ -87,7 +85,7 @@ function MinimalSidebar() {
                     data-active={pathname === "/dashboard"}
                     className="flex w-full items-center gap-2 text-muted-foreground group-data-[collapsible=icon]:justify-center"
                   >
-                    <GridIcon className="h-4 w-4 shrink-0" />
+                    <UseIcon name="grid" className="size-4 shrink-0" />
                     <span className="truncate group-data-[collapsible=icon]:hidden">
                       Inicio
                     </span>
@@ -106,7 +104,7 @@ function MinimalSidebar() {
                     data-active={pathname === "/doc"}
                     className="flex w-full items-center gap-2 text-muted-foreground group-data-[collapsible=icon]:justify-center"
                   >
-                    <PlusIcon className="h-4 w-4 shrink-0" />
+                    <UseIcon name="plus" className="size-4 shrink-0" />
                     <span className="truncate group-data-[collapsible=icon]:hidden">
                       Nuevo documento
                     </span>
@@ -125,7 +123,7 @@ function MinimalSidebar() {
                     data-active={pathname === "/doc"}
                     className="flex w-full items-center gap-2 text-muted-foreground group-data-[collapsible=icon]:justify-center"
                   >
-                    <ArchiveBoxIcon className="h-4 w-4 shrink-0" />
+                    <UseIcon name="archive-box" className="size-4 shrink-0" />
                     <span className="truncate group-data-[collapsible=icon]:hidden">
                       Ver documentos
                     </span>

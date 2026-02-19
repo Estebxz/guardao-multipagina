@@ -1,7 +1,0 @@
-export const XIcon = ({ className }: { className?: string }) => {
-    return (
-        <svg width="800px" height="800px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fill="currentColor" className={className}>
-            <path stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.5 23.5l15-15M23.5 23.5l-15-15" />
-        </svg>
-    )
-};

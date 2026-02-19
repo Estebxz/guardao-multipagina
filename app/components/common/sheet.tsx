@@ -1,7 +1,7 @@
 "use client"
 
 import * as SheetPrimitive from "@radix-ui/react-dialog";
-import { GithubIcon } from "@ico/github";
+import { UseIcon } from "@hooks/use-icons";
 import { cn } from "@lib/utils";
 import { ComponentProps } from "react";
 
@@ -72,7 +72,7 @@ function SheetContent({
 			>
 				{children}
 				<SheetPrimitive.Close className="absolute top-4 right-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
-					<GithubIcon className="size-4" />
+					<UseIcon name="escape" className="size-4" />
 					<span className="sr-only">Close</span>
 				</SheetPrimitive.Close>
 			</SheetPrimitive.Content>

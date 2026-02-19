@@ -30,7 +30,7 @@ import {
 } from "react";
 import { cn } from "@/app/lib/utils";
 import { Button } from "./button";
-import { PanelLeftIcon } from "@ico/panel-left";
+import { UseIcon } from "@hooks/use-icons";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -369,7 +369,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <PanelLeftIcon className="fill-foreground"/>
+      <UseIcon name="panel-left" className="size-4 fill-foreground" />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   );

@@ -1,4 +1,4 @@
-import { DonutIcon } from "@ico/donut";
+import { UseIcon } from "@hooks/use-icons";
 import Link from "next/link";
 
 export default function NotFound() {
@@ -9,7 +9,7 @@ export default function NotFound() {
           4
         </span>
 
-        <DonutIcon className="size-20 sm:size-24 md:size-28 text-foreground transition-transform duration-700 hover:rotate-360" />
+        <UseIcon name="donut" className="size-20 sm:size-24 md:size-28 text-foreground transition-transform duration-700 hover:rotate-360" />
 
         <span className="flex items-center justify-center rounded-lg border border-border bg-card/50 backdrop-blur-sm w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 text-4xl sm:text-5xl md:text-6xl font-light text-foreground/80 transition-all duration-300 hover:scale-95 hover:bg-card/70">
           4

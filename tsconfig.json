@@ -24,8 +24,8 @@
       "@hooks/*": ["app/hooks/*"],
       "@lib/*": ["app/lib/*"],
       "@common/*": ["app/components/common/*"],
-      "@ico/*": ["app/components/icons/*"],
-      "@shell/*": ["app/components/shell/*"]
+      "@shell/*": ["app/components/shell/*"],
+      "@type/*": ["app/types/*"]
     }
   },
   "include": [

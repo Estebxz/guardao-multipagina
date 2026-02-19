@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@common/button";
-import { XIcon } from "@ico/escape";
+import { UseIcon } from "@hooks/use-icons";
 import { HIDE_ANNOUNCEMENT_BAR_STORAGE_KEY } from "@lib/local-cookies";
 import { sileo } from "sileo";
 
@@ -52,7 +52,7 @@ export function AnnouncementBar() {
           className="p-0! size-6 rounded-full text-xs opacity-60 transition-all hover:bg-primary/10 hover:opacity-100"
           aria-label="Cerrar anuncio"
         >
-          <XIcon className="size-3" />
+          <UseIcon name="escape" className="size-3" />
         </Button>
       </div>
     </div>
