@@ -11,4 +11,5 @@ export type IconName =
   | 'spinner'
   | 'archive-box'
   | 'trash'
-  | 'donut';
+  | 'donut'
+  | 'arrow-up-left';
