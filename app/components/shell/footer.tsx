@@ -6,6 +6,7 @@ export default function Footer() {
       <div className="container mx-auto flex h-8 max-w-2xl items-center justify-between px-6">
         <div className="flex items-center gap-4 text-xs text-muted-foreground">
           <a
+            aria-label="Enlace social a GitHub"
             href="https://github.com/Estebxz/guardao-multipagina"
             target="_blank"
             rel="noopener noreferrer"
@@ -15,6 +16,7 @@ export default function Footer() {
           </a>
 
           <a
+            aria-label="Enlace social a LinkedIn"
             href="https://www.linkedin.com/in/martinez-esteban/"
             target="_blank"
             rel="noopener noreferrer"
@@ -27,6 +29,7 @@ export default function Footer() {
         <div className="text-xs text-muted-foreground">
           Construido por{" "}
           <a
+            aria-label="Enlace al sitio web de Joan Esteban"
             href="https://joanmm.netlify.app/"
             target="_blank"
             rel="noopener noreferrer"

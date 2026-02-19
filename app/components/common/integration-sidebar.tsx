@@ -81,6 +81,7 @@ function MinimalSidebar() {
                   className="flex w-full items-center justify-start gap-2 px-2 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground group-data-[collapsible=icon]:justify-center"
                 >
                   <Link
+                    aria-label="Ir al inicio"
                     href="/dashboard"
                     data-active={pathname === "/dashboard"}
                     className="flex w-full items-center gap-2 text-muted-foreground group-data-[collapsible=icon]:justify-center"
@@ -100,6 +101,7 @@ function MinimalSidebar() {
                   className="flex w-full items-center justify-start gap-2 px-2 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground group-data-[collapsible=icon]:justify-center"
                 >
                   <Link
+                    aria-label="Crear nuevo documento"
                     href="/doc"
                     data-active={pathname === "/doc"}
                     className="flex w-full items-center gap-2 text-muted-foreground group-data-[collapsible=icon]:justify-center"
@@ -119,6 +121,7 @@ function MinimalSidebar() {
                   className="flex w-full items-center justify-start gap-2 px-2 py-1.5 text-sm text-muted-foreground hover:bg-accent/80 hover:text-foreground group-data-[collapsible=icon]:justify-center"
                 >
                   <Link
+                    aria-label="Ver documentos"
                     href="/items"
                     data-active={pathname === "/doc"}
                     className="flex w-full items-center gap-2 text-muted-foreground group-data-[collapsible=icon]:justify-center"
