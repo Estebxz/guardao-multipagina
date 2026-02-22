@@ -55,7 +55,7 @@
 ## 🖥️ Desarrollo Local:
 
 > [!IMPORTANT]
-> Necesita tener instalado **Bun** para poder ejecutar los comandos de instalación y desarrollo.
+> Necesita tener instalado [**Bun**](https://bun.sh/)
 
 1. Clone el repositorio:
 
