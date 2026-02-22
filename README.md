@@ -1,13 +1,104 @@
-<p align="center">
-  <img src="./public/text-logo.svg" alt="Logo" />
+<a id="readme-top"></a>
+
+<div align="center">
+ 
+<strong><h1>Web Oficial de GUARDAO</h1></strong>
+<a href="https://guardao.vercel.app/" target="_blank" rel="noopener noreferrer">
+ 
+![texto](/public/images/capture.webp)
+ 
+</a>
+</div>
+ 
+<br>
+<br>
+<br>
+
+## 📎 Descripción:
+
+**_Guardao_** _es una aplicación web multipágina diseñada para ofrecer una solución organizada, segura y estructurada para la gestión y almacenamiento de información. El proyecto nace con el objetivo de aplicar buenas prácticas de desarrollo frontend, arquitectura limpia y despliegue en la nube._
+
+## 🚀 Tech Stack:
+
+- ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)  
+  Framework de React para aplicaciones web con renderizado híbrido (SSR, SSG).
+
+- ![TypeScript](https://img.shields.io/badge/typescript-%23235A97.svg?style=for-the-badge&logo=typescript&logoColor=white)  
+  JavaScript que añade tipado para mejorar escalabilidad y mantenibilidad.
+
+- ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%233EBFF8.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)  
+  Framework CSS para construir interfaces modernas y responsivas rápidamente.
+
+- ![Supabase](https://img.shields.io/badge/Supabase-%231B653A?style=for-the-badge&logo=supabase&logoColor=white)  
+  Backend as a Service basado en PostgreSQL con autenticación, base de datos y APIs en tiempo real.
+
+- ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)  
+  Editor de código ligero y potente con gran ecosistema de extensiones.
+
+- ![Zod](https://img.shields.io/badge/zod-%234658BD.svg?style=for-the-badge&logo=zod&logoColor=white)  
+  Librería de validación y tipado para esquemas en TypeScript.
+
+- ![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)  
+  Plataforma de despliegue para aplicaciones frontend y proyectos con Next.js.
+
+<p align="right">
+    (<a href="#readme-top">regresar</a>)
+    (<a href="#readme-index">índice</a>)
 </p>
 
-***Guardao*** *es una aplicación web multipágina diseñada para ofrecer una solución organizada, segura y estructurada para la gestión y almacenamiento de información. El proyecto nace con el objetivo de aplicar buenas prácticas de desarrollo frontend, arquitectura limpia y despliegue en la nube.*
+<a id="readme-index"></a>
 
----
-![texto](/public/images/capture.webp)
+## 🧭 Índice:
 
+1. [Desarrollo Local](#%EF%B8%8F-desarrollo-local)
 
-# ARQUITECTURA
-![texto](/public/images/diagram-arquitecture.webp)
+## 🖥️ Desarrollo Local:
 
+> [!IMPORTANT]
+> Necesita tener instalado **Bun** para poder ejecutar los comandos de instalación y desarrollo.
+
+1. Clone el repositorio:
+
+```bash
+git clone https://github.com/Estebxz/guardao-multipagina.git
+```
+
+2. Entre en el repositorio:
+
+```bash
+cd guardao-multipagina
+```
+
+3. Instale las dependencias:
+
+```bash
+bun install
+```
+
+4. Configure el archivo .env:
+
+```bash
+# Linux/MacOS:
+cp .env.example .env
+
+# Windows:
+copy .env.example .env
+```
+
+> [!NOTE]
+> Recuerde establecer correctamente las credenciales correspondientes en el archivo **.env** si requiere un buen funcionamiento del _backend_, de lo contrario solamente renderizará el _frontend_.
+
+5. Inicie el servidor en modo desarrollo:
+
+```bash
+bun run dev
+```
+
+6. Abra el navegador en la siguiente URL:
+
+→ [http://localhost:3000](http://localhost:3000)
+
+<p align="right">
+    (<a href="#readme-top">regresar</a>)
+    (<a href="#readme-index">índice</a>)
+</p>
