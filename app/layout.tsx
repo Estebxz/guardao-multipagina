@@ -5,38 +5,62 @@ import { AnnouncementBar } from "@common/announcement-bar";
 
 export const metadata: Metadata = {
   title: "GUARDAO - Aloja, crea y descarga archivos",
-  description: "Aloja, crea y descarga archivos de manera rápida y segura, personalizando tu experiencia, colaboración en comunidad e integración con aplicaciones externas.",
-  keywords: ["guardao", "GUARDAO", "guardao vercel", "GUARDAO VERCEL", "guardao app", "GUARDAO APP", "aloja", "crea", "descarga", "archivos", "rápido", "seguro", "personaliza", "colaboración", "comunidad", "integración", "aplicaciones", "externas"],
+  description:
+    "Aloja, crea y descarga archivos de manera rápida y segura, personalizando tu experiencia, colaboración en comunidad e integración con aplicaciones externas.",
+  keywords: [
+    "guardao",
+    "GUARDAO",
+    "guardao vercel",
+    "GUARDAO VERCEL",
+    "guardao app",
+    "GUARDAO APP",
+    "aloja",
+    "crea",
+    "descarga",
+    "archivos",
+    "rápido",
+    "seguro",
+    "personaliza",
+    "colaboración",
+    "comunidad",
+    "integración",
+    "aplicaciones",
+    "externas",
+  ],
   applicationName: "GUARDAO",
-  authors: [{ name: "Joan Esteban Mendez", url: "https://joanmm.netlify.app/" }],
+  authors: [
+    { name: "Joan Esteban Mendez", url: "https://joanmm.netlify.app/" },
+  ],
   creator: "Joan Esteban Mendez",
   metadataBase: new URL("https://guardao.vercel.app"),
   openGraph: {
     type: "website",
     title: "GUARDAO - Construido por Joan Esteban Mendez",
-    description: "Aloja, crea y descarga archivos de manera rápida y segura, personalizando tu experiencia, colaboración en comunidad e integración con aplicaciones externas.",
-    url: "guardao.vercel.app/",
+    description:
+      "Aloja, crea y descarga archivos de manera rápida y segura, personalizando tu experiencia, colaboración en comunidad e integración con aplicaciones externas.",
+    url: "/",
     images: [
       {
-        url: "guardao.vercel.app/og.jpg",
+        url: "/og.jpg",
         width: 1200,
         height: 630,
-        alt: "GUARDAO - Construido por Joan Esteban Mendez"
-      }
+        alt: "GUARDAO - Construido por Joan Esteban Mendez",
+      },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title: "GUARDAO - Construido por Joan Esteban Mendez",
-    description: "Aloja, crea y descarga archivos de manera rápida y segura, personalizando tu experiencia, colaboración en comunidad e integración con aplicaciones externas.",
+    description:
+      "Aloja, crea y descarga archivos de manera rápida y segura, personalizando tu experiencia, colaboración en comunidad e integración con aplicaciones externas.",
     creator: "Joan Esteban Mendez",
-    images: ["guardao.vercel.app/og.jpg"]
+    images: ["/og.jpg"],
   },
   icons: {
     icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png"
+    apple: "/apple-touch-icon.png",
   },
-  category: "technology"
+  category: "technology",
 };
 
 export default function RootLayout({
