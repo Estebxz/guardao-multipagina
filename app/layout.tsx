@@ -10,7 +10,33 @@ export const metadata: Metadata = {
   applicationName: "GUARDAO",
   authors: [{ name: "Joan Esteban Mendez", url: "https://joanmm.netlify.app/" }],
   creator: "Joan Esteban Mendez",
-  metadataBase: new URL("https://guardao.vercel.app")
+  metadataBase: new URL("https://guardao.vercel.app"),
+  openGraph: {
+    type: "website",
+    title: "GUARDAO - Construido por Joan Esteban Mendez",
+    description: "Aloja, crea y descarga archivos de manera rápida y segura, personalizando tu experiencia, colaboración en comunidad e integración con aplicaciones externas.",
+    url: "guardao.vercel.app/",
+    images: [
+      {
+        url: "guardao.vercel.app/og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "GUARDAO - Construido por Joan Esteban Mendez"
+      }
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "GUARDAO - Construido por Joan Esteban Mendez",
+    description: "Aloja, crea y descarga archivos de manera rápida y segura, personalizando tu experiencia, colaboración en comunidad e integración con aplicaciones externas.",
+    creator: "Joan Esteban Mendez",
+    images: ["guardao.vercel.app/og.jpg"]
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png"
+  },
+  category: "technology"
 };
 
 export default function RootLayout({
