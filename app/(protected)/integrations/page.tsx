@@ -1,21 +1,21 @@
 "use client";
 
-import { Badge } from "@/app/components/ui/badge";
-import { Button } from "@/app/components/ui/button";
+import { Badge } from "@ui/badge";
+import { Button } from "@ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/app/components/ui/card";
-import { Input } from "@/app/components/ui/input";
+} from "@ui/card";
+import { Input } from "@ui/input";
 import {
   Tabs,
   TabsList,
   TabsTrigger,
   TabsContent,
-} from "@/app/components/ui/tabs";
+} from "@ui/tabs";
 import {
   AlertCircle,
   CheckCircle2,
@@ -33,8 +33,9 @@ import { MsTeamsIcon } from "@/app/components/icons/ms-teams";
 import { NotionIcon } from "@/app/components/icons/notion";
 import { SlackIcon } from "@/app/components/icons/slack";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FC, useState } from "react";
-import { useUser } from "@clerk/nextjs";
+import { useIntegrationActions } from "@hooks/use-integration-actions";
 import type { UserResource } from "@clerk/types";
 
 type Integration = {
@@ -238,7 +239,8 @@ const integrationCategories: {
 ];
 
 export default function IntegrationsPage() {
-  const { user } = useUser();
+  const router = useRouter();
+  const { connect, disconnect, user } = useIntegrationActions();
   const [error, setError] = useState<{
     message: string;
     details?: unknown;
@@ -249,21 +251,27 @@ export default function IntegrationsPage() {
   const handleDisconnect = async (provider: string) => {
     try {
       setIsLoading(provider);
-      const externalAccount = user?.externalAccounts.find(
-        (account) => account.provider === provider,
-      );
+      const result = await disconnect(provider);
+      if (result.cancelled) return;
 
-      if (!externalAccount) {
-        throw new Error(
-          `No se encontró una cuenta externa para el proveedor ${provider}`,
-        );
+      // Refresh the route to update the UI
+      router.refresh();
+    } catch (err) {
+      const maybeClerkError = err as {
+        clerkError?: boolean;
+        code?: string;
+      };
+
+      // If user cancels the reverification modal, don't show an error.
+      if (maybeClerkError?.clerkError === true && maybeClerkError?.code) {
+        if (
+          maybeClerkError.code === "reverification_cancelled" ||
+          maybeClerkError.code === "reverification_cancelled_error"
+        ) {
+          return;
+        }
       }
 
-      await externalAccount.destroy();
-
-      // Refresh the page to update the UI
-      window.location.reload();
-    } catch (err) {
       console.error("Error disconnecting account:", err);
       setError({
         message: "No se pudo desconectar la cuenta",
@@ -437,12 +445,23 @@ export default function IntegrationsPage() {
                             asChild
                             disabled={integration.disabled}
                           >
-                            <Link
-                              href={`/sign-in?redirect=/integrations/${integration.name.toLowerCase()}`}
-                            >
-                              <Plus className="mr-2 h-4 w-4" />
-                              Conectar
-                            </Link>
+                            {user ? (
+                              <button
+                                type="button"
+                                onClick={() => connect()}
+                                className="inline-flex h-full w-full items-center justify-center"
+                              >
+                                <Plus className="mr-2 h-4 w-4" />
+                                Conectar
+                              </button>
+                            ) : (
+                              <Link
+                                href={`/sign-in?redirect=/integrations/${integration.name.toLowerCase()}`}
+                              >
+                                <Plus className="mr-2 h-4 w-4" />
+                                Conectar
+                              </Link>
+                            )}
                           </Button>
                         )}
                       </div>
@@ -603,13 +622,9 @@ export default function IntegrationsPage() {
                           )}
                         </div>
                         <div className="flex space-x-2">
-                          <Button className="flex-1" asChild>
-                            <Link
-                              href={`/sign-in?redirect=/integrations/${integration.name.toLowerCase()}`}
-                            >
-                              <Plus className="mr-2 h-4 w-4" />
-                              Conectar
-                            </Link>
+                          <Button className="flex-1" onClick={() => connect()}>
+                            <Plus className="mr-2 h-4 w-4" />
+                            Conectar
                           </Button>
                         </div>
                       </CardContent>

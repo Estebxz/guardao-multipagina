@@ -1,18 +1,18 @@
 "use client";
 
-import { Badge } from "@/app/components/ui/badge";
-import { Button } from "@/app/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/app/components/ui/card";
-import { GithubIcon } from "@/app/components/icons/github";
+import { Badge } from "@ui/badge";
+import { Button } from "@ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@ui/card";
+import { GithubIcon } from "@icons/github";
 import { useUser } from "@clerk/nextjs";
+import { useIntegrationActions } from "@hooks/use-integration-actions";
 import { CheckCircle2, RefreshCw } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { StatCard } from "@/app/components/shared/stat-card";
+import { LanguageDot } from "@/app/components/shared/language-dot";
 
 interface GitHubUser {
   login: string;
@@ -22,11 +22,20 @@ interface GitHubUser {
   public_repos: number;
 }
 
+interface GitHubEmail {
+  email: string;
+  primary: boolean;
+  verified: boolean;
+  visibility: "public" | "private" | null;
+}
+
 interface GitHubRepo {
   id: number;
   name: string;
   full_name: string;
   description: string | null;
+  language: string | null;
+  private: boolean;
   stargazers_count: number;
   forks_count: number;
   updated_at: string;
@@ -34,8 +43,11 @@ interface GitHubRepo {
 }
 
 export default function GitHubIntegrationPage() {
+  const router = useRouter();
+  const { connect, disconnect } = useIntegrationActions();
   const { user, isLoaded: userLoaded } = useUser();
   const [githubUser, setGithubUser] = useState<GitHubUser | null>(null);
+  const [githubEmail, setGithubEmail] = useState<string | null>(null);
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
   const [loading, setLoading] = useState(true);
   const [isSyncing, setIsSyncing] = useState(false);
@@ -53,26 +65,154 @@ export default function GitHubIntegrationPage() {
   );
   const isConnected = Boolean(githubAccount);
 
-  const reposPerPage = 20;
+  const publicReposCount = useMemo(() => {
+    return githubUser?.public_repos ?? 0;
+  }, [githubUser?.public_repos]);
 
-  const fetchGitHubUser = async (username: string) => {
-    const userRes = await fetch(`https://api.github.com/users/${username}`);
-    if (!userRes.ok) {
+  const mostUsedLanguage = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const repo of repos) {
+      const lang = repo.language;
+      if (!lang) continue;
+      counts.set(lang, (counts.get(lang) ?? 0) + 1);
+    }
+
+    let bestLang: string | null = null;
+    let bestCount = 0;
+
+    for (const [lang, count] of counts.entries()) {
+      if (count > bestCount) {
+        bestLang = lang;
+        bestCount = count;
+      }
+    }
+
+    return bestLang;
+  }, [repos]);
+
+  const lastPush = useMemo(() => {
+    const newest = repos.reduce<Date | null>((acc, repo) => {
+      const d = new Date(repo.updated_at);
+      if (Number.isNaN(d.getTime())) return acc;
+      if (!acc || d > acc) return d;
+      return acc;
+    }, null);
+
+    if (!newest) {
+      return { title: "-", subtitle: "" };
+    }
+
+    const now = new Date();
+    const isToday =
+      newest.getFullYear() === now.getFullYear() &&
+      newest.getMonth() === now.getMonth() &&
+      newest.getDate() === now.getDate();
+
+    const subtitle = newest.toLocaleDateString("es-ES");
+    const title = isToday ? "Hoy" : subtitle;
+
+    return { title, subtitle };
+  }, [repos]);
+
+  const reposPerPage = 5;
+
+  const sleep = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
+
+  const fetchJsonWithRetry = useCallback(
+    async <T,>(
+      input: RequestInfo | URL,
+      init?: RequestInit,
+      options?: {
+        retries?: number;
+        initialDelayMs?: number;
+      },
+    ): Promise<T> => {
+      const retries = options?.retries ?? 4;
+      const initialDelayMs = options?.initialDelayMs ?? 250;
+
+      let lastError: unknown;
+
+      for (let attempt = 0; attempt <= retries; attempt += 1) {
+        try {
+          const res = await fetch(input, init);
+          if (res.ok) return (await res.json()) as T;
+
+          const body = await res.text();
+          const err = new Error("Request failed");
+          (err as Error & { cause?: unknown }).cause = {
+            status: res.status,
+            body,
+          };
+
+          const retriable =
+            res.status === 401 || res.status === 403 || res.status >= 500;
+          if (!retriable || attempt === retries) throw err;
+
+          await sleep(initialDelayMs * 2 ** attempt);
+        } catch (e) {
+          lastError = e;
+          if (attempt === retries) break;
+          await sleep(initialDelayMs * 2 ** attempt);
+        }
+      }
+
+      throw lastError instanceof Error
+        ? lastError
+        : new Error("No se pudo completar la solicitud.");
+    },
+    [],
+  );
+
+  const fetchGitHubUser = useCallback(async () => {
+    try {
+      return await fetchJsonWithRetry<GitHubUser>(
+        "/api/github/user",
+        undefined,
+        {
+          retries: 4,
+          initialDelayMs: 250,
+        },
+      );
+    } catch {
       throw new Error("No se pudo obtener el perfil de GitHub.");
     }
-    return (await userRes.json()) as GitHubUser;
-  };
+  }, [fetchJsonWithRetry]);
 
-  const fetchGitHubReposPage = async (username: string, page: number) => {
-    const reposRes = await fetch(
-      `https://api.github.com/users/${username}/repos?per_page=${reposPerPage}&sort=updated&page=${page}`,
-    );
-    if (!reposRes.ok) {
-      throw new Error("No se pudieron obtener los repositorios de GitHub.");
+  const fetchGitHubReposPage = useCallback(
+    async (page: number) => {
+      try {
+        const ghRepos = await fetchJsonWithRetry<GitHubRepo[]>(
+          `/api/github/repos?per_page=${reposPerPage}&page=${page}`,
+          undefined,
+          {
+            retries: 4,
+            initialDelayMs: 250,
+          },
+        );
+        return Array.isArray(ghRepos) ? ghRepos : [];
+      } catch {
+        throw new Error("No se pudieron obtener los repositorios de GitHub.");
+      }
+    },
+    [fetchJsonWithRetry, reposPerPage],
+  );
+
+  const fetchGitHubEmails = useCallback(async () => {
+    try {
+      const emails = await fetchJsonWithRetry<GitHubEmail[]>(
+        "/api/github/emails",
+        undefined,
+        {
+          retries: 2,
+          initialDelayMs: 250,
+        },
+      );
+      return Array.isArray(emails) ? emails : [];
+    } catch {
+      return [];
     }
-    const ghRepos = (await reposRes.json()) as GitHubRepo[];
-    return Array.isArray(ghRepos) ? ghRepos : [];
-  };
+  }, [fetchJsonWithRetry]);
 
   useEffect(() => {
     async function fetchGitHubData() {
@@ -80,6 +220,9 @@ export default function GitHubIntegrationPage() {
         setLoading(false);
         return;
       }
+
+      setLoading(true);
+      setError(null);
 
       try {
         const username = githubAccount?.username;
@@ -93,14 +236,19 @@ export default function GitHubIntegrationPage() {
         setHasMoreRepos(false);
         setShowAllRepos(false);
 
-        const [ghUser, ghReposFirstPage] = await Promise.all([
-          fetchGitHubUser(username),
-          fetchGitHubReposPage(username, 1),
+        const [ghUser, ghReposFirstPage, ghEmails] = await Promise.all([
+          fetchGitHubUser(),
+          fetchGitHubReposPage(1),
+          fetchGitHubEmails(),
         ]);
 
         setGithubUser(ghUser);
         setRepos(ghReposFirstPage);
         setHasMoreRepos(ghReposFirstPage.length === reposPerPage);
+
+        const primaryVerified = ghEmails.find((e) => e.primary && e.verified);
+        const anyVerified = ghEmails.find((e) => e.verified);
+        setGithubEmail((primaryVerified ?? anyVerified)?.email ?? null);
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError({
@@ -115,8 +263,20 @@ export default function GitHubIntegrationPage() {
       }
     }
 
+    if (isConnected) {
+      setError(null);
+      setLoading(true);
+    }
+
     fetchGitHubData();
-  }, [userLoaded, isConnected, githubAccount?.username]);
+  }, [
+    fetchGitHubReposPage,
+    fetchGitHubEmails,
+    fetchGitHubUser,
+    githubAccount?.username,
+    isConnected,
+    userLoaded,
+  ]);
 
   const handleDisconnect = async () => {
     try {
@@ -124,15 +284,30 @@ export default function GitHubIntegrationPage() {
         throw new Error("No hay una cuenta de GitHub conectada.");
       }
 
-      await githubAccount.destroy();
+      const result = await disconnect("github");
+      if (result.cancelled) return;
 
-      // Redirect to the integrations page after disconnecting
-      window.location.href = "/integrations";
+      router.push("/integrations");
+      router.refresh();
     } catch (err: unknown) {
+      const maybeClerkError = err as {
+        clerkError?: boolean;
+        code?: string;
+      };
+
+      if (maybeClerkError?.clerkError === true && maybeClerkError?.code) {
+        if (
+          maybeClerkError.code === "reverification_cancelled" ||
+          maybeClerkError.code === "reverification_cancelled_error"
+        ) {
+          return;
+        }
+      }
+
       if (err instanceof Error) {
         setError({
           message: err.message,
-          details: (err.cause as { details?: unknown })?.details,
+          details: (err as Error & { cause?: unknown }).cause,
         });
       } else {
         setError({ message: "Ocurrió un error desconocido" });
@@ -148,10 +323,7 @@ export default function GitHubIntegrationPage() {
       setIsLoadingMore(true);
       const nextPage = repoPage + 1;
 
-      const nextRepos = await fetchGitHubReposPage(
-        githubAccount.username,
-        nextPage,
-      );
+      const nextRepos = await fetchGitHubReposPage(nextPage);
 
       setRepos((prev) => [...prev, ...nextRepos]);
       setRepoPage(nextPage);
@@ -180,10 +352,7 @@ export default function GitHubIntegrationPage() {
 
       while (more) {
         const nextPage = page + 1;
-        const nextRepos = await fetchGitHubReposPage(
-          githubAccount.username,
-          nextPage,
-        );
+        const nextRepos = await fetchGitHubReposPage(nextPage);
 
         setRepos((prev) => [...prev, ...nextRepos]);
         page = nextPage;
@@ -218,14 +387,19 @@ export default function GitHubIntegrationPage() {
       setHasMoreRepos(false);
       setShowAllRepos(false);
 
-      const [ghUser, ghReposFirstPage] = await Promise.all([
-        fetchGitHubUser(username),
-        fetchGitHubReposPage(username, 1),
+      const [ghUser, ghReposFirstPage, ghEmails] = await Promise.all([
+        fetchGitHubUser(),
+        fetchGitHubReposPage(1),
+        fetchGitHubEmails(),
       ]);
 
       setGithubUser(ghUser);
       setRepos(ghReposFirstPage);
       setHasMoreRepos(ghReposFirstPage.length === reposPerPage);
+
+      const primaryVerified = ghEmails.find((e) => e.primary && e.verified);
+      const anyVerified = ghEmails.find((e) => e.verified);
+      setGithubEmail((primaryVerified ?? anyVerified)?.email ?? null);
       console.log("Se sincronizó la información desde GitHub.");
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -266,11 +440,7 @@ export default function GitHubIntegrationPage() {
               Conecta tu cuenta de GitHub para acceder a tus repositorios y
               notificaciones.
             </p>
-            <Button asChild>
-              <Link href="/sign-in?redirect=/integrations/github">
-                Conectar GitHub
-              </Link>
-            </Button>
+            <Button onClick={() => connect()}>Conectar GitHub</Button>
           </CardContent>
         </Card>
       </div>
@@ -287,10 +457,12 @@ export default function GitHubIntegrationPage() {
               {JSON.stringify(error.details ?? {}, null, 2)}
             </pre>
 
-            <Button variant="outline" className="mt-4" asChild>
-              <Link href="/sign-in?redirect=/integrations/github">
-                Reconectar GitHub
-              </Link>
+            <Button
+              variant="outline"
+              className="mt-4"
+              onClick={() => connect()}
+            >
+              Reconectar GitHub
             </Button>
           </CardContent>
         </Card>
@@ -307,9 +479,7 @@ export default function GitHubIntegrationPage() {
             <h2 className="font-bold text-2xl tracking-tight">
               Integración con GitHub
             </h2>
-            <p className="text-muted-foreground">
-              Administra tus repositorios (y próximamente tus notificaciones)
-            </p>
+            <p className="text-muted-foreground">Administra tus repositorios</p>
           </div>
           <Badge
             variant="default"
@@ -322,15 +492,15 @@ export default function GitHubIntegrationPage() {
         <div className="flex space-x-2">
           <Button variant="default" onClick={handleSync} disabled={isSyncing}>
             {isSyncing ? (
-              <>
+              <div className="flex items-center">
                 <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
                 Sincronizando...
-              </>
+              </div>
             ) : (
-              <>
+              <div className="flex items-center">
                 <RefreshCw className="mr-2 h-4 w-4" />
                 Actualizar datos
-              </>
+              </div>
             )}
           </Button>
           <Button variant="outline" onClick={handleDisconnect}>
@@ -339,31 +509,59 @@ export default function GitHubIntegrationPage() {
         </div>
       </div>
 
-      {/* User Profile */}
       {githubUser && (
         <Card>
           <CardHeader>
             <CardTitle>Perfil</CardTitle>
           </CardHeader>
-          <CardContent className="flex items-center space-x-4">
-            <img
-              src={githubUser.avatar_url}
-              alt={githubUser.login}
-              className="h-16 w-16 rounded-full"
-            />
-            <div>
-              <h3 className="font-medium text-lg">
-                {githubUser.name ?? githubUser.login}
-              </h3>
+          <CardContent className="space-y-6">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-4">
+                <Image
+                  src={githubUser.avatar_url}
+                  alt={githubUser.login}
+                  width={64}
+                  height={64}
+                  className="h-16 w-16 rounded-full"
+                />
+                <div>
+                  <h3 className="font-medium text-lg">
+                    {githubUser.name ?? githubUser.login}
+                  </h3>
 
-              {githubUser.bio && (
-                <p className="text-muted-foreground text-sm">
-                  {githubUser.bio}
-                </p>
-              )}
-              <p className="text-muted-foreground text-sm">
-                Repositorios: {githubUser.public_repos}
-              </p>
+                  {githubEmail && (
+                    <p className="text-muted-foreground text-sm">
+                      {githubEmail}
+                    </p>
+                  )}
+
+                  {githubUser.bio && (
+                    <p className="text-muted-foreground text-sm">
+                      {githubUser.bio}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-3">
+              <StatCard
+                label="Repos públicos"
+                value={publicReposCount}
+                subtitle="en tu cuenta"
+              />
+
+              <StatCard
+                label="Lenguaje principal"
+                value={mostUsedLanguage ?? "-"}
+                subtitle="más usado"
+              />
+
+              <StatCard
+                label="Último push"
+                value={lastPush.title}
+                subtitle={lastPush.subtitle}
+              />
             </div>
           </CardContent>
         </Card>
@@ -386,10 +584,15 @@ export default function GitHubIntegrationPage() {
                 className="flex items-center justify-between border-b py-2"
               >
                 <div>
-                  <p className="font-medium text-sm">{repo.full_name}</p>
+                  <p className="font-normal text-base text-primary">{repo.full_name}</p>
                   {repo.description && (
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-muted-foreground text-xs">
                       {repo.description}
+                    </p>
+                  )}
+                  {repo.language && (
+                    <p className="text-muted-foreground text-sm">
+                      {repo.language && <LanguageDot language={repo.language} />}
                     </p>
                   )}
                   <p className="text-muted-foreground text-sm">

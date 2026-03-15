@@ -28,7 +28,8 @@
       "@type/*": ["app/types/*"],
       "@shared/*": ["app/components/shared/*"],
       "@ui/*": ["app/components/ui/*"],
-      "@layout/*": ["app/components/layout/*"]
+      "@layout/*": ["app/components/layout/*"],
+      "@icons/*": ["app/components/icons/*"]
     }
   },
   "include": [
