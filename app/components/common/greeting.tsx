@@ -9,9 +9,11 @@ const GREETINGS = [
 
 const Greeting: FC = () => {
   const hour = new Date().getHours();
-  const { text } = GREETINGS.find(({ from, to }) => hour >= from && hour < to)!;
+  const greeting = GREETINGS.find(({ from, to }) => hour >= from && hour < to);
 
-  return <h1 className="text-7xl font-fusion capitalize">{text}</h1>;
+  if (!greeting) return null;
+
+  return <h1 className="text-7xl font-fusion capitalize">{greeting.text}</h1>;
 };
 
 export default Greeting;

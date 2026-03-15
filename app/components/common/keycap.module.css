@@ -93,6 +93,10 @@
   transition: transform 0.1s ease-out;
 }
 
+.active {
+  transform: translateX(-1rem) translateY(-1rem);
+}
+
 .key.active {
   transform: translateX(-1rem) translateY(-1rem);
 }
@@ -145,12 +149,10 @@
 .key .top::before {
   content: "";
   position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: var(--keyboard-key-bg);
-  border-radius: 0.8em;
+  inset: 0;
+  background-color: color-mix(in srgb, var(--keyboard-key-bg) 90%, transparent);
   filter: blur(0.3rem);
-  transform: translate(10%, 10%);
+  transform: translate(10%, 10%) scale(0.9);
   z-index: 1;
 }
 
