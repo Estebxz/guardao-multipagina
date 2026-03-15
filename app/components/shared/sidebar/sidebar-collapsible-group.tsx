@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import type { ReactNode } from "react";
 
 import {
   Collapsible,
@@ -20,7 +19,6 @@ export function SidebarCollapsibleGroup({
   defaultOpen = true,
   isActive,
   items,
-  footer,
 }: {
   label: string;
   tooltip: string;
@@ -28,7 +26,6 @@ export function SidebarCollapsibleGroup({
   defaultOpen?: boolean;
   isActive: boolean;
   items: SidebarCollapsibleGroupItem[];
-  footer?: ReactNode;
 }) {
   return (
     <SidebarMenuItem>

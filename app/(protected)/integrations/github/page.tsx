@@ -13,7 +13,6 @@ import { useUser } from "@clerk/nextjs";
 import { CheckCircle2, RefreshCw } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
 
 interface GitHubUser {
   login: string;
@@ -227,21 +226,16 @@ export default function GitHubIntegrationPage() {
       setGithubUser(ghUser);
       setRepos(ghReposFirstPage);
       setHasMoreRepos(ghReposFirstPage.length === reposPerPage);
-
-      toast.success("Datos actualizados", {
-        description: "Se sincronizó la información desde GitHub.",
-      });
+      console.log("Se sincronizó la información desde GitHub.");
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError({
           message: err.message,
           details: (err.cause as { details?: unknown })?.details,
         });
-        toast.error("Error al sincronizar", { description: err.message });
+        console.error("Error al sincronizar:", err.message);
       } else {
-        toast.error("Error al sincronizar", {
-          description: "Ocurrió un error desconocido",
-        });
+        console.error("Error al sincronizar: Ocurrió un error desconocido");
       }
     } finally {
       setLoading(false);
