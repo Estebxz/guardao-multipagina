@@ -600,7 +600,7 @@ export default function GitHubIntegrationPage() {
                     {new Date(repo.updated_at).toLocaleDateString("es-ES")}
                   </p>
                 </div>
-                <Button variant="outline" asChild>
+                <Button asChild variant="secondary" size="lg">
                   <Link href={repo.html_url} target="_blank">
                     Ver
                   </Link>
