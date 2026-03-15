@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/app/components/ui/button";
 import { UseIcon } from "@hooks/use-icons";
 import { HIDE_ANNOUNCEMENT_BAR_STORAGE_KEY } from "@lib/local-cookies";
-import { sileo } from "sileo";
+import { toast } from "sonner";
 
 export function AnnouncementBar() {
   const [showAnnouncement, setShowAnnouncement] = useState(true);
@@ -28,8 +28,7 @@ export function AnnouncementBar() {
       window.localStorage.setItem(HIDE_ANNOUNCEMENT_BAR_STORAGE_KEY, "true");
       setShowAnnouncement(false);
     } catch {
-      sileo.error({
-        title: "Error",
+      toast.error("Error", {
         description: "No se pudo guardar la preferencia de ocultar el anuncio",
       });
     }

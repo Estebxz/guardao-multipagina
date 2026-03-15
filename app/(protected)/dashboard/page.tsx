@@ -14,14 +14,14 @@ export default async function Home() {
 
           <section className="flex flex-wrap justify-center gap-3">
             <Link
-              href="doc"
+              href="/documents/create"
               className="inline-flex items-center gap-2 rounded-lg border border-border px-5 py-3 font-medium text-foreground transition-all duration-300 hover:bg-card/50"
             >
               <UseIcon name="plus" className="size-4 fill-foreground" />
               Nuevo documento
             </Link>
             <Link
-              href="items"
+              href="/documents"
               className="inline-flex items-center gap-2 rounded-lg border border-border px-5 py-3 font-medium text-foreground transition-all duration-300 hover:bg-card/50"
             >
               <UseIcon name="archive-box" className="size-4 fill-foreground" />

@@ -6,12 +6,12 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/app/components/ui/card";
-import { Button } from "@/app/components/ui/button";
+} from "@ui/card";
+import { Button } from "@ui/button";
 import { UseIcon } from "@hooks/use-icons";
 import { deleteDocument } from "@/app/actions/actions";
 import { useRouter } from "next/navigation";
-import { sileo } from "sileo";
+import { toast } from "sonner";
 
 type DocumentCardProps = {
   id: number;
@@ -62,13 +62,13 @@ export default function DocumentCard({
             </CardDescription>
 
             {description!.length > 100 && (
-              <button
+              <Button
                 type="button"
+                variant="outline"
                 onClick={() => setShowMore((prev) => !prev)}
-                className="w-fit text-sm font-medium text-muted-foreground underline-offset-4 hover:text-foreground"
               >
                 {showMore ? "Mostrar menos" : "Mostrar más"}
-              </button>
+              </Button>
             )}
           </div>
         )}
@@ -86,11 +86,12 @@ export default function DocumentCard({
                 return;
               }
 
-              sileo.error({
-                title: "Documento eliminado",
+              toast.promise(async () => {
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+              }, {
+                loading: "Eliminando documento...",
+                success: "Documento eliminado",
                 description: "Se ha eliminado el documento correctamente",
-                autopilot: true,
-                roundness: 5,
               });
 
               router.refresh();

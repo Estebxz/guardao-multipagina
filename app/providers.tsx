@@ -1,9 +1,9 @@
 "use client";
 
 import { ClerkProvider } from "@clerk/nextjs";
-import { TooltipProvider } from "@/app/components/ui/tooltip";
+import { TooltipProvider } from "@ui/tooltip";
 import { esES } from "@clerk/localizations";
-import { Toaster } from "sileo";
+import { Toaster } from "sonner";
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -51,16 +51,15 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
       }}
     >
       <TooltipProvider delayDuration={0}>
-        <Toaster
-          position="bottom-right"
-          options={{
-            fill: "var(--card)",
-            styles: {
-              title: "text-card-foreground",
-              description: "text-muted-foreground",
-              button: "bg-accent/50 text-accent-foreground hover:bg-accent/70",
-            },
-          }}
+        <Toaster 
+        position="bottom-right"
+        richColors
+        toastOptions={{
+          classNames: {
+            toast: "app-toast",
+            success: "app-toast-success",
+          }
+        }}
         />
         {children}
       </TooltipProvider>

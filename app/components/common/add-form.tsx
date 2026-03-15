@@ -2,9 +2,9 @@
 
 import { useRef, useState, useTransition } from "react";
 import { addDocument } from "@/app/actions/actions";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { sileo } from "sileo";
+import { Button } from "@ui/button";
+import { Input } from "@ui/input";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 export default function AddTaskForm() {
@@ -28,16 +28,14 @@ export default function AddTaskForm() {
         setTitle("");
         setDescription("");
 
-        sileo.success({
-          title: "Documento guardado",
+        toast.success("Documento guardado", {
           description: "Se ha guardado el documento correctamente",
-          button: {
-            title: "Ver documento",
+          action: {
+            label: "Ver documento",
             onClick: () => {
-              router.push("/items");
+              router.push("/documents");
             },
           },
-          roundness: 5,
         });
       }
     });
