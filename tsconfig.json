@@ -25,7 +25,10 @@
       "@lib/*": ["app/lib/*"],
       "@common/*": ["app/components/common/*"],
       "@shell/*": ["app/components/shell/*"],
-      "@type/*": ["app/types/*"]
+      "@type/*": ["app/types/*"],
+      "@shared/*": ["app/components/shared/*"],
+      "@ui/*": ["app/components/ui/*"],
+      "@layout/*": ["app/components/layout/*"]
     }
   },
   "include": [

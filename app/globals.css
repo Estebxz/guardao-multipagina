@@ -153,6 +153,23 @@ body::after {
   z-index: -1;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  border-radius: 3px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
 .keyboard {
   transform: rotateX(60deg) rotateZ(45deg);
   transform-style: preserve-3d;

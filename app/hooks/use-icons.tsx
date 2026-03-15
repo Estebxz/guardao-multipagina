@@ -1,7 +1,7 @@
-import type { IconName } from "@type/types";
+import type { IconName, SidebarIcon } from "@type/ui";
 
 interface IconProps {
-  name: IconName;
+  name: IconName | SidebarIcon;
   className?: string;
 }
 

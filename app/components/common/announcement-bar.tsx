@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button } from "@common/button";
+import { Button } from "@/app/components/ui/button";
 import { UseIcon } from "@hooks/use-icons";
 import { HIDE_ANNOUNCEMENT_BAR_STORAGE_KEY } from "@lib/local-cookies";
 import { sileo } from "sileo";

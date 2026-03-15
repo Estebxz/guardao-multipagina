@@ -2,8 +2,8 @@
 
 import { useRef, useState, useTransition } from "react";
 import { addDocument } from "@/app/actions/actions";
-import { Button } from "./button";
-import { Input } from "./input";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 import { sileo } from "sileo";
 import { useRouter } from "next/navigation";
 
@@ -20,7 +20,7 @@ export default function AddTaskForm() {
   function handleSubmit(formData: FormData) {
     startTransition(async () => {
       const res = await addDocument(formData);
-      
+
       if (res?.error) {
         setError(res.error);
       } else {

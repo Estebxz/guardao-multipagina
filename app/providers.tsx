@@ -1,5 +1,5 @@
 import { ClerkProvider } from "@clerk/nextjs";
-import { TooltipProvider } from "@common/tooltip";
+import { TooltipProvider } from "@/app/components/ui/tooltip";
 import { esES } from "@clerk/localizations";
 import { Toaster } from "sileo";
 

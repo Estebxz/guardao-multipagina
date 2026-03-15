@@ -1,8 +1,13 @@
 "use client";
 
 import { useMemo, useState, useTransition } from "react";
-import { Card, CardDescription, CardHeader, CardTitle } from "@common/card";
-import { Button } from "@common/button";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/app/components/ui/card";
+import { Button } from "@/app/components/ui/button";
 import { UseIcon } from "@hooks/use-icons";
 import { deleteDocument } from "@/app/actions/actions";
 import { useRouter } from "next/navigation";
@@ -92,7 +97,7 @@ export default function DocumentCard({
             });
           }}
         >
-          <UseIcon name="trash" className="size-3 fill-transparent"/>
+          <UseIcon name="trash" className="size-3 fill-transparent" />
           Eliminar
         </Button>
       </CardHeader>

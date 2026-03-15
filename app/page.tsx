@@ -1,5 +1,5 @@
 import { SignedIn, UserAvatar } from "@clerk/nextjs";
-import Footer from "@shell/footer";
+import Footer from "@/app/components/layout/footer";
 import GKeyCapClient from "@common/keycap";
 import Image from "next/image";
 

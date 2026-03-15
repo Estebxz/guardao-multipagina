@@ -7,7 +7,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@common/tooltip";
+} from "@/app/components/ui/tooltip";
 
 import {
   Sheet,
@@ -15,7 +15,7 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@common/sheet";
+} from "@/app/components/ui/sheet";
 
 import { useIsMobile } from "@/app/hooks/use-mobile";
 import {
@@ -29,7 +29,7 @@ import {
   useState,
 } from "react";
 import { cn } from "@/app/lib/utils";
-import { Button } from "./button";
+import { Button } from "@/app/components/ui/button";
 import { UseIcon } from "@hooks/use-icons";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
@@ -275,17 +275,17 @@ function Sidebar({
 }
 
 function SidebarContent({ className, ...props }: ComponentProps<"div">) {
-	return (
-		<div
-			data-slot="sidebar-content"
-			data-sidebar="content"
-			className={cn(
-				"flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
-				className,
-			)}
-			{...props}
-		/>
-	);
+  return (
+    <div
+      data-slot="sidebar-content"
+      data-sidebar="content"
+      className={cn(
+        "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
+        className,
+      )}
+      {...props}
+    />
+  );
 }
 
 function SidebarHeader({ className, ...props }: ComponentProps<"div">) {
@@ -321,7 +321,7 @@ function SidebarMenuButton({
       data-sidebar="menu-button"
       data-size={size}
       data-active={isActive}
-      className={cn(sidebarMenuButtonVariants({ variant, size }), className, )}
+      className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
       {...props}
     />
   );
@@ -409,28 +409,28 @@ function SidebarMenuItem({ className, ...props }: ComponentProps<"li">) {
 }
 
 function SidebarRail({ className, ...props }: ComponentProps<"button">) {
-	const { toggleSidebar } = useSidebar();
+  const { toggleSidebar } = useSidebar();
 
-	return (
-		<button
-			data-sidebar="rail"
-			data-slot="sidebar-rail"
-			aria-label="Toggle Sidebar"
-			tabIndex={-1}
-			onClick={toggleSidebar}
-			title="Panel lateral"
-			className={cn(
-				"-translate-x-1/2 group-data-[side=left]:-right-4 absolute inset-y-0 z-20 hidden w-4 transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-0.5 hover:after:bg-white/30 group-data-[side=right]:left-0 sm:flex",
-				"in-data-[side=left]:cursor-w-resize in-data-[side=right]:cursor-e-resize",
-				"[[data-side=left][data-state=collapsed]_&]:cursor-e-resize [[data-side=right][data-state=collapsed]_&]:cursor-w-resize",
-				"group-data-[collapsible=offcanvas]:translate-x-0 hover:group-data-[collapsible=offcanvas]:bg-white group-data-[collapsible=offcanvas]:after:left-full",
-				"[[data-side=left][data-collapsible=offcanvas]_&]:-right-2",
-				"[[data-side=right][data-collapsible=offcanvas]_&]:-left-2",
-				className,
-			)}
-			{...props}
-		/>
-	);
+  return (
+    <button
+      data-sidebar="rail"
+      data-slot="sidebar-rail"
+      aria-label="Toggle Sidebar"
+      tabIndex={-1}
+      onClick={toggleSidebar}
+      title="Panel lateral"
+      className={cn(
+        "-translate-x-1/2 group-data-[side=left]:-right-4 absolute inset-y-0 z-20 hidden w-4 transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-0.5 hover:after:bg-white/30 group-data-[side=right]:left-0 sm:flex",
+        "in-data-[side=left]:cursor-w-resize in-data-[side=right]:cursor-e-resize",
+        "[[data-side=left][data-state=collapsed]_&]:cursor-e-resize [[data-side=right][data-state=collapsed]_&]:cursor-w-resize",
+        "group-data-[collapsible=offcanvas]:translate-x-0 hover:group-data-[collapsible=offcanvas]:bg-white group-data-[collapsible=offcanvas]:after:left-full",
+        "[[data-side=left][data-collapsible=offcanvas]_&]:-right-2",
+        "[[data-side=right][data-collapsible=offcanvas]_&]:-left-2",
+        className,
+      )}
+      {...props}
+    />
+  );
 }
 
 export {
@@ -444,5 +444,5 @@ export {
   SidebarMenu,
   SidebarMenuItem,
   SidebarTrigger,
-  SidebarRail
+  SidebarRail,
 };
