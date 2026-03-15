@@ -5,6 +5,7 @@ import { useIsMobile } from "@hooks/use-mobile";
 import { useEffect, useState, useRef, useCallback, FC } from "react";
 import { cn } from "@lib/utils";
 import { useRouter } from "next/navigation";
+import styles from "./keycap.module.css";
 
 interface KeyProps {
   char: string;
@@ -15,18 +16,21 @@ interface KeyProps {
 const Key: FC<KeyProps> = ({ char, active, onPress }) => {
   return (
     <div
-      className={cn("key", active && "active")}
+      className={cn(styles.key, active && styles.active)}
       onClick={onPress}
       role="button"
       tabIndex={0}
       aria-label="Press to continue"
     >
-      <div className="side" />
-      <div className="top">
+      <div className={styles.side} />
+      <div className={styles.top}>
         {active ? (
-          <UseIcon name="spinner" className="char size-10 animate-spin" />
+          <UseIcon
+            name="spinner"
+            className={cn(styles.char, "size-10 animate-spin")}
+          />
         ) : (
-          <div className="char">{char}</div>
+          <div className={styles.char}>{char}</div>
         )}
       </div>
     </div>
@@ -74,12 +78,9 @@ const GKeyCapClient: FC = () => {
   }, [navigate]);
 
   return (
-    <div className="keyboard">
-      <Key 
-      char="T"
-      active={isLoading} 
-      onPress={navigate} />
-      <div className="cover" />
+    <div className={styles.keyboard}>
+      <Key char="T" active={isLoading} onPress={navigate} />
+      <div className={styles.cover} />
 
       {isMobile && (
         <button
