@@ -1,3 +1,21 @@
+:root {
+  --keyboard-bg: oklch(0.24 0.038 283);
+  --keyboard-base: oklch(0.20 0.040 280);
+  --keyboard-highlight: oklch(0.38 0.052 287);
+  --keyboard-shadow: oklch(22.419% 0.03863 282.84);
+  
+  --keyboard-text: oklch(0.88 0.022 292);
+  --keyboard-text-shadow: oklch(0.44 0.042 286);
+  --keyboard-text-shadow-dark: oklch(0.28 0.036 282);
+  
+  --keyboard-key-bg: oklch(0.32 0.048 285);
+  --keyboard-key-highlight: oklch(0.48 0.062 290);
+  --keyboard-key-shadow: oklch(0.18 0.040 280);
+  
+  --keyboard-inset-highlight: oklch(0.42 0.055 288);
+  --keyboard-inset-shadow: oklch(0.22 0.038 282);
+}
+
 .keyboard {
   transform: rotateX(60deg) rotateZ(45deg);
   transform-style: preserve-3d;
