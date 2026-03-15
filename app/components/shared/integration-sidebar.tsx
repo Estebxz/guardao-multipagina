@@ -79,7 +79,7 @@ function MinimalSidebar() {
           </div>
           <SidebarMenuButton
             tooltip="Abrir panel lateral"
-            className="flex size-8 items-center hover:bg-accent/70 justify-center"
+            className="flex size-8 items-center hover:bg-primary/80 justify-center"
             asChild
           >
             <SidebarTrigger>
@@ -118,7 +118,7 @@ function MinimalSidebar() {
               <SidebarMenuButton
                 asChild
                 tooltip="Ver todas las integraciones"
-                className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 font-medium text-accent brightness-150 text-sm hover:bg-muted hover:text-accent/80 group-data-[collapsible=icon]:justify-center"
+                className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 font-medium text-primary brightness-150 text-sm hover:bg-muted hover:text-primary/80 group-data-[collapsible=icon]:justify-center"
               >
                 <Link href="/integrations">
                   <UseIcon name="merge" className="size-4 shrink-0 rotate-180" />

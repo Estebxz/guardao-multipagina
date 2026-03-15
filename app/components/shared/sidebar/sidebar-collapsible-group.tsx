@@ -38,7 +38,7 @@ export function SidebarCollapsibleGroup({
             tooltip={tooltip}
             isActive={isActive}
             className={cn(
-              "flex w-full items-center justify-start gap-2 px-2 py-1.5 text-sm text-muted-foreground hover:bg-accent/80 hover:text-muted-foreground tracking-wide group-data-[collapsible=icon]:justify-center cursor-pointer",
+              "flex w-full items-center justify-start gap-2 px-2 py-1.5 text-sm text-muted-foreground hover:bg-primary/80 hover:text-muted-foreground tracking-wide group-data-[collapsible=icon]:justify-center cursor-pointer",
             )}
           >
             {typeof icon === "string" ? (
@@ -70,8 +70,8 @@ export function SidebarCollapsibleGroup({
                 tooltip={item.tooltip}
                 isActive={item.isActive}
                 className={cn(
-                  "flex w-full items-center justify-start gap-2 px-2 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground group-data-[collapsible=icon]:justify-center",
-                  "data-[active=true]:bg-accent data-[active=true]:text-white",
+                  "flex w-full items-center justify-start gap-2 px-2 py-1.5 text-sm text-muted-foreground hover:bg-primary hover:text-foreground group-data-[collapsible=icon]:justify-center",
+                  "data-[active=true]:bg-primary data-[active=true]:text-white",
                 )}
               >
                 <Link
