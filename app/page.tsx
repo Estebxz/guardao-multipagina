@@ -7,7 +7,7 @@ import styles from "./page-background.module.css";
 export default function LandingPage() {
   return (
     <div className={styles.background}>
-      <div className="grid h-screen grid-rows-[1fr_auto]">
+      <div className="grid min-h-screen grid-rows-[1fr_auto]">
         <main className="relative z-10 flex items-center justify-center overflow-hidden px-4 py-8">
           <section className="container mx-auto flex w-full max-w-2xl flex-col items-center justify-center text-center">
             <SignedIn>

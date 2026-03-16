@@ -2,7 +2,7 @@ import { UseIcon } from "@hooks/use-icons";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border/40 bg-black/60 backdrop-blur-sm">
+    <footer className="border-t border-border/40 bg-black/80">
       <div className="container mx-auto flex h-8 max-w-2xl items-center justify-between px-6">
         <div className="flex items-center gap-4 text-xs text-muted-foreground">
           <a

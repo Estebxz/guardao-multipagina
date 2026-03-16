@@ -57,7 +57,6 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
         toastOptions={{
           classNames: {
             toast: "app-toast",
-            success: "app-toast-success",
           }
         }}
         />

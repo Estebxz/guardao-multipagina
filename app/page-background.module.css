@@ -1,6 +1,6 @@
 .background {
   position: relative;
-  min-height: 100vh;
+  min-height: 100dvh;
   isolation: isolate;
 }
 
@@ -9,11 +9,19 @@
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: url("/bg.webp") no-repeat 80% 20% / 140% auto;
   opacity: 0.6;
   filter: blur(20px);
   transform: scale(1.1);
   z-index: -2;
+
+  background: url("/bg.webp") no-repeat 80% 20% / 140% auto;
+}
+
+@media (max-width: 640px) {
+  .background::before {
+    background: url("/bg.webp") no-repeat center 20% / cover;
+    filter: blur(12px);
+  }
 }
 
 .background::after {
@@ -28,4 +36,41 @@
 .background > * {
   position: relative;
   z-index: 0;
+}
+
+.digit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background-color: color-mix(in oklch, var(--card) 50%, transparent);
+  backdrop-filter: blur(4px);
+  width: 5rem;
+  height: 5rem;
+  font-size: 2.25rem;
+  font-weight: 300;
+  color: color-mix(in oklch, var(--foreground) 80%, transparent);
+  transition: all 300ms;
+}
+
+.digit:hover {
+  scale: 0.95;
+  background-color: color-mix(in oklch, var(--card) 70%, transparent);
+}
+
+@media (min-width: 640px) {
+  .digit {
+    width: 6rem;
+    height: 6rem;
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .digit {
+    width: 7rem;
+    height: 7rem;
+    font-size: 3.75rem;
+  }
 }

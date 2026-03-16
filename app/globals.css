@@ -165,13 +165,3 @@ body {
   color: var(--foreground) !important;
   border: 1px solid var(--border) !important;
 }
-
-.app-toast-success {
-  background: color-mix(in oklch, var(--success) 20%, var(--card)) !important;
-  color: var(--success) !important;
-  border-color: color-mix(
-    in oklch,
-    var(--success) 25%,
-    var(--border)
-  ) !important;
-}
