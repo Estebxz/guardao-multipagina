@@ -173,4 +173,51 @@
       fill="currentColor"
     />
   </symbol>
+
+  <symbol id="icon-code" viewBox="0 0 24 24">
+    <path
+      d="M9 7 4 12l5 5M15 7l5 5-5 5"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </symbol>
+
+  <symbol id="icon-clock" viewBox="0 0 24 24">
+    <path
+      d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M12 6v6"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M16.24 16.24 12 12"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </symbol>
+
+  <symbol id="icon-home" viewBox="0 0 24 24">
+    <path
+      d="M12 3.188 21.45 10.275 21 11.625h-.75V20.25H3.75V11.625H3l-.45-1.35L12 3.188ZM5.25 10.125v8.625h13.5v-8.625L12 5.063l-6.75 5.062Z"
+      fill="currentColor"
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+    />
+  </symbol>
 </svg>

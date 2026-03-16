@@ -63,7 +63,7 @@ export function SidebarCollapsibleGroup({
           {items.map((item) => (
             <div
               key={item.label}
-              className="ml-4 border-muted-foreground border-l border-dashed px-2 group-data-[collapsible=icon]:ml-0 group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:border-transparent"
+              className="ml-4 border-muted- border-l border-dashed px-2 group-data-[collapsible=icon]:ml-0 group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:border-transparent"
             >
               <SidebarMenuButton
                 asChild

@@ -471,10 +471,10 @@ export default function GitHubIntegrationPage() {
   }
 
   return (
-    <div className="h-full flex-1 flex-col space-y-8 p-8">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <GithubIcon className="h-8 w-8" />
+    <div className="flex h-full flex-col space-y-8 p-4 md:p-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div className="flex flex-wrap items-center gap-3">
+          <GithubIcon className="size-8 shrink-0" />
           <div>
             <h2 className="font-bold text-2xl tracking-tight">
               Integración con GitHub
@@ -489,7 +489,7 @@ export default function GitHubIntegrationPage() {
             Conectada
           </Badge>
         </div>
-        <div className="flex space-x-2">
+        <div className="flex shrink-0 gap-2">
           <Button variant="default" onClick={handleSync} disabled={isSyncing}>
             {isSyncing ? (
               <div className="flex items-center">
@@ -515,52 +515,56 @@ export default function GitHubIntegrationPage() {
             <CardTitle>Perfil</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center gap-4">
                 <Image
                   src={githubUser.avatar_url}
                   alt={githubUser.login}
-                  width={64}
-                  height={64}
-                  className="h-16 w-16 rounded-full"
+                  width={56}
+                  height={56}
+                  className="size-14 shrink-0 rounded-full"
                 />
-                <div>
+                <div className="min-w-0">
                   <h3 className="font-medium text-lg">
                     {githubUser.name ?? githubUser.login}
                   </h3>
 
                   {githubEmail && (
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-muted-foreground text-sm truncate">
                       {githubEmail}
                     </p>
                   )}
 
                   {githubUser.bio && (
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-muted-foreground mt-1 text-sm italic">
                       {githubUser.bio}
                     </p>
                   )}
                 </div>
               </div>
-            </div>
 
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
               <StatCard
                 label="Repos públicos"
                 value={publicReposCount}
                 subtitle="en tu cuenta"
+                icon="grid"
+                accent="blue"
               />
 
               <StatCard
                 label="Lenguaje principal"
                 value={mostUsedLanguage ?? "-"}
                 subtitle="más usado"
+                icon="code"
+                accent="amber"
               />
 
               <StatCard
                 label="Último push"
                 value={lastPush.title}
                 subtitle={lastPush.subtitle}
+                icon="clock"
+                accent="green"
               />
             </div>
           </CardContent>

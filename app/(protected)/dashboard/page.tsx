@@ -21,11 +21,11 @@ export default async function Home() {
               Nuevo documento
             </Link>
             <Link
-              href="/documents"
+              href="/integrations"
               className="inline-flex items-center gap-2 rounded-lg border border-border px-5 py-3 font-medium text-foreground transition-all duration-300 hover:bg-card/50"
             >
-              <UseIcon name="archive-box" className="size-4 fill-foreground" />
-              Ver documentos
+              <UseIcon name="settings" className="size-4 fill-foreground" />
+              Integraciones
             </Link>
           </section>
         </div>

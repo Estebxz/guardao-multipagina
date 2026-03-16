@@ -18,7 +18,10 @@ export type IconName =
   | "arrow-prev-small"
   | "folders"
   | "settings"
-  | "merge";
+  | "merge"
+  | "code"
+  | "clock"
+  | "home";
 
 export type SidebarIcon = IconName | ComponentType<{ className?: string }>;
 

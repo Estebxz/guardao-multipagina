@@ -23,220 +23,12 @@ import {
   Plus,
   Settings,
 } from "lucide-react";
-import { DiscordIcon } from "@/app/components/icons/discord";
-import { GithubIcon } from "@/app/components/icons/github";
-import { GmailIcon } from "@/app/components/icons/gmail";
-import { GoogleCalendarIcon } from "@/app/components/icons/google-calendar";
-import { GoogleDocsIcon } from "@/app/components/icons/google-docs";
-import { LinearIcon } from "@/app/components/icons/linear";
-import { MsTeamsIcon } from "@/app/components/icons/ms-teams";
-import { NotionIcon } from "@/app/components/icons/notion";
-import { SlackIcon } from "@/app/components/icons/slack";
+
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FC, useState } from "react";
 import { useIntegrationActions } from "@hooks/use-integration-actions";
-import type { UserResource } from "@clerk/types";
-
-type Integration = {
-  name: string;
-  description: string;
-  icon: FC<{ className?: string; size?: number }>;
-  getStatus: (
-    user: UserResource | null | undefined,
-  ) => "connected" | "disconnected";
-  bgColor: string;
-  iconColor: string;
-  link: string;
-  provider: string;
-  disabled?: boolean;
-  status?: string;
-};
-
-const integrationCategories: {
-  title: string;
-  description: string;
-  integrations: Integration[];
-}[] = [
-  {
-    title: "Productividad",
-    description:
-      "Integra tus herramientas de productividad y gestión de proyectos",
-    integrations: [
-      {
-        name: "GitHub",
-        description:
-          "Accede a repositorios e incidencias desde tu cuenta de GitHub",
-        icon: GithubIcon,
-        getStatus: (user: UserResource | null | undefined) =>
-          user?.externalAccounts?.some(
-            (account) => account.provider === "github",
-          )
-            ? "connected"
-            : "disconnected",
-        bgColor: "bg-gray-500/10",
-        iconColor: "text-gray-500",
-        link: "/integrations/github",
-        provider: "github",
-      },
-      {
-        name: "Notion",
-        description:
-          "Accede a páginas y bases de datos desde tu espacio de trabajo en Notion",
-        icon: NotionIcon,
-        getStatus: (user: UserResource | null | undefined) =>
-          user?.externalAccounts?.some(
-            (account) => account.provider === "notion",
-          )
-            ? "connected"
-            : "disconnected",
-        bgColor: "bg-stone-500/10",
-        iconColor: "text-stone-500",
-        link: "/integrations/notion",
-        provider: "notion",
-      },
-      {
-        name: "Linear",
-        description:
-          "Accede a incidencias y equipos desde tu espacio de trabajo en Linear",
-        icon: LinearIcon,
-        getStatus: (user: UserResource | null | undefined) =>
-          user?.externalAccounts?.some(
-            (account) => account.provider === "linear",
-          )
-            ? "connected"
-            : "disconnected",
-        bgColor: "bg-violet-500/10",
-        iconColor: "text-violet-500",
-        link: "/integrations/linear",
-        provider: "linear",
-      },
-      {
-        name: "Google Calendar",
-        description: "Sincroniza eventos y horarios desde Google Calendar",
-        icon: GoogleCalendarIcon,
-        getStatus: (user: UserResource | null | undefined) =>
-          user?.externalAccounts?.some(
-            (account) =>
-              account.provider === "google" &&
-              account.approvedScopes.includes(
-                "https://www.googleapis.com/auth/calendar.app.created",
-              ) &&
-              account.approvedScopes.includes(
-                "https://www.googleapis.com/auth/calendar.calendarlist.readonly",
-              ),
-          )
-            ? "connected"
-            : "disconnected",
-        bgColor: "bg-blue-500/10",
-        iconColor: "text-blue-500",
-        link: "/integrations/google-calendar",
-        provider: "google",
-        disabled: true,
-        status: "Pronto",
-      },
-      {
-        name: "Google Docs",
-        description: "Accede y sincroniza documentos desde Google Docs",
-        icon: GoogleDocsIcon,
-        getStatus: (user: UserResource | null | undefined) =>
-          user?.externalAccounts?.some(
-            (account) =>
-              account.provider === "google" &&
-              account.approvedScopes.includes(
-                "https://www.googleapis.com/auth/drive.file",
-              ),
-          )
-            ? "connected"
-            : "disconnected",
-        bgColor: "bg-blue-500/10",
-        iconColor: "text-blue-500",
-        link: "/integrations/google-docs",
-        provider: "google",
-        disabled: true,
-        status: "Pronto",
-      },
-    ],
-  },
-  {
-    title: "Comunicación",
-    description:
-      "Conecta tus herramientas de comunicación y colaboración en equipo",
-    integrations: [
-      {
-        name: "Discord",
-        description: "Importa mensajes y archivos desde canales de Discord",
-        icon: DiscordIcon,
-        getStatus: (user: UserResource | null | undefined) =>
-          user?.externalAccounts?.some(
-            (account) => account.provider === "discord",
-          )
-            ? "connected"
-            : "disconnected",
-        bgColor: "bg-indigo-500/10",
-        iconColor: "text-indigo-500",
-        link: "/integrations/discord",
-        provider: "discord",
-      },
-      {
-        name: "Slack",
-        description:
-          "Sincroniza mensajes e hilos desde espacios de trabajo en Slack",
-        icon: SlackIcon,
-        getStatus: (user: UserResource | null | undefined) =>
-          user?.externalAccounts?.some(
-            (account) => account.provider === "slack",
-          )
-            ? "connected"
-            : "disconnected",
-        bgColor: "bg-green-500/10",
-        iconColor: "text-green-500",
-        link: "/integrations/slack",
-        provider: "slack",
-        disabled: true,
-        status: "Pronto",
-      },
-      {
-        name: "Gmail",
-        description: "Sincroniza correos y adjuntos desde tu cuenta de Gmail",
-        icon: GmailIcon,
-        getStatus: (user: UserResource | null | undefined) =>
-          user?.externalAccounts?.some(
-            (account) =>
-              account.provider === "google" &&
-              account.approvedScopes.includes(
-                "https://www.googleapis.com/auth/gmail.addons.current.message.action",
-              ),
-          )
-            ? "connected"
-            : "disconnected",
-        bgColor: "bg-red-500/10",
-        iconColor: "text-red-500",
-        link: "/integrations/gmail",
-        provider: "google",
-        disabled: true,
-        status: "Pronto",
-      },
-      {
-        name: "Microsoft Teams",
-        description: "Sincroniza mensajes e hilos desde Microsoft Teams",
-        icon: MsTeamsIcon,
-        getStatus: (user: UserResource | null | undefined) =>
-          user?.externalAccounts?.some(
-            (account) => account.provider === "microsoft",
-          )
-            ? "connected"
-            : "disconnected",
-        bgColor: "bg-blue-500/10",
-        iconColor: "text-blue-500",
-        link: "/integrations/microsoft-teams",
-        disabled: true,
-        status: "Pronto",
-        provider: "microsoft",
-      },
-    ],
-  },
-];
+import { useState } from "react";
+import { integrationCategories } from "@lib/integration-nav";
 
 export default function IntegrationsPage() {
   const router = useRouter();
@@ -254,7 +46,6 @@ export default function IntegrationsPage() {
       const result = await disconnect(provider);
       if (result.cancelled) return;
 
-      // Refresh the route to update the UI
       router.refresh();
     } catch (err) {
       const maybeClerkError = err as {
@@ -262,7 +53,6 @@ export default function IntegrationsPage() {
         code?: string;
       };
 
-      // If user cancels the reverification modal, don't show an error.
       if (maybeClerkError?.clerkError === true && maybeClerkError?.code) {
         if (
           maybeClerkError.code === "reverification_cancelled" ||
@@ -283,40 +73,29 @@ export default function IntegrationsPage() {
   };
 
   return (
-    <div className="h-full flex-1 flex-col space-y-8 p-8 md:flex">
-      <div className="flex items-center justify-between space-y-2">
+    <div className="flex h-full flex-1 flex-col space-y-8 p-4 md:p-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="font-bold text-2xl tracking-tight">Integraciones</h2>
           <p className="text-muted-foreground">
             Administra y configura tus integraciones de servicios
           </p>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center shrink-0">
           <Button>
-            <Settings className="mr-2 h-4 w-4" />
+            <Settings className="mr-2 size-4" />
             Ajustes
           </Button>
         </div>
       </div>
-
-      {error && (
-        <Card className="border-red-500">
-          <CardContent className="pt-6">
-            <p className="text-red-500">Error: {error.message}</p>
-            <pre className="mt-2 text-gray-500 text-sm">
-              Detalles: {JSON.stringify(error.details ?? {}, null, 2)}
-            </pre>
-          </CardContent>
-        </Card>
-      )}
 
       <Tabs
         defaultValue="all"
         className="space-y-6"
         onValueChange={setActiveTab}
       >
-        <div className="flex items-center justify-between">
-          <TabsList>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <TabsList className="w-full sm:w-auto">
             <TabsTrigger value="all">Todas</TabsTrigger>
             <TabsTrigger value="connected">Conectadas</TabsTrigger>
             <TabsTrigger value="available">Disponibles</TabsTrigger>
@@ -324,7 +103,7 @@ export default function IntegrationsPage() {
           <div className="flex items-center space-x-2">
             <Input
               placeholder="Buscar integraciones..."
-              className="h-8 w-37.5 lg:w-62.5"
+              className="h-8 w-full sm:w-40 lg:w-64"
             />
           </div>
         </div>

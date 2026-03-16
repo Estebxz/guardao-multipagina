@@ -1,8 +1,5 @@
 import type { SidebarIcon } from "@type/ui";
 import { GithubIcon } from "@/app/components/icons/github";
-import { NotionIcon } from "@/app/components/icons/notion";
-import { LinearIcon } from "@/app/components/icons/linear";
-import { DiscordIcon } from "@/app/components/icons/discord";
 
 export type SidebarNavItemConfig = {
   label: string;
@@ -15,7 +12,7 @@ export const mainNav: SidebarNavItemConfig[] = [
   {
     label: "Inicio",
     tooltip: "Navegar al inicio",
-    icon: "grid",
+    icon: "home",
     url: "/dashboard",
   },
 ];
@@ -41,23 +38,5 @@ export const integrationsNav: SidebarNavItemConfig[] = [
     tooltip: "Acceder a GitHub",
     icon: GithubIcon,
     url: "/integrations/github",
-  },
-  {
-    label: "Notion",
-    tooltip: "Acceder a Notion",
-    icon: NotionIcon,
-    url: "/integrations/notion",
-  },
-  {
-    label: "Linear",
-    tooltip: "Acceder a Linear",
-    icon: LinearIcon,
-    url: "/integrations/linear",
-  },
-  {
-    label: "Discord",
-    tooltip: "Acceder a Discord",
-    icon: DiscordIcon,
-    url: "/integrations/discord",
   },
 ];
