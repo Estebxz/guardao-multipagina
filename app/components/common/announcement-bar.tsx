@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button } from "@/app/components/ui/button";
+import { Button } from "@ui/button";
 import { UseIcon } from "@hooks/use-icons";
 import { HIDE_ANNOUNCEMENT_BAR_STORAGE_KEY } from "@lib/local-cookies";
 import { toast } from "sonner";
 
 export function AnnouncementBar() {
-  const [showAnnouncement, setShowAnnouncement] = useState(true);
+  const [showAnnouncement, setShowAnnouncement] = useState(false);
 
   useEffect(() => {
     let nextShow = true;
@@ -20,7 +20,11 @@ export function AnnouncementBar() {
       nextShow = true;
     }
 
-    (async () => setShowAnnouncement(nextShow))();
+    const timeoutId = window.setTimeout(() => {
+      setShowAnnouncement(nextShow);
+    }, 0);
+
+    return () => window.clearTimeout(timeoutId);
   }, []);
 
   const handleDismiss = () => {
@@ -37,7 +41,7 @@ export function AnnouncementBar() {
   if (!showAnnouncement) return null;
 
   return (
-    <div className="flex h-10 items-center justify-center border-b border-border bg-muted px-4 text-foreground">
+    <div className="fixed top-0 left-0 right-0 z-50 flex h-10 items-center justify-center border-b border-border bg-muted px-4 text-foreground">
       <div className="flex items-center gap-2 text-center text-xs sm:text-sm">
         <span className="text-muted-foreground">
           Este proyecto se encuentra en desarrollo y{" "}
@@ -48,7 +52,6 @@ export function AnnouncementBar() {
           variant="ghost"
           size="icon"
           onClick={handleDismiss}
-          className="p-0! size-6 rounded-full text-xs opacity-60 transition-all hover:bg-primary/10 hover:opacity-100"
           aria-label="Cerrar anuncio"
         >
           <UseIcon name="escape" className="size-3" />
