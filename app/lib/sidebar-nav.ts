@@ -1,5 +1,6 @@
 import type { SidebarIcon } from "@type/ui";
 import { GithubIcon } from "@/app/components/icons/github";
+import { DiscordIcon } from "@/app/components/icons/discord";
 
 export type SidebarNavItemConfig = {
   label: string;
@@ -38,5 +39,11 @@ export const integrationsNav: SidebarNavItemConfig[] = [
     tooltip: "Acceder a GitHub",
     icon: GithubIcon,
     url: "/integrations/github",
+  },
+  {
+    label: "Discord",
+    tooltip: "Acceder a Discord",
+    icon: DiscordIcon,
+    url: "/integrations/discord",
   },
 ];

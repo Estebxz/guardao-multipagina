@@ -32,3 +32,32 @@ export type SidebarCollapsibleGroupItem = {
   url: string;
   isActive: boolean;
 };
+
+
+export interface GitHubUser {
+  login: string;
+  name: string | null;
+  avatar_url: string;
+  bio: string | null;
+  public_repos: number;
+}
+
+export interface GitHubEmail {
+  email: string;
+  primary: boolean;
+  verified: boolean;
+  visibility: "public" | "private" | null;
+}
+
+export interface GitHubRepo {
+  id: number;
+  name: string;
+  full_name: string;
+  description: string | null;
+  language: string | null;
+  private: boolean;
+  stargazers_count: number;
+  forks_count: number;
+  updated_at: string;
+  html_url: string;
+}

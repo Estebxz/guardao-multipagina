@@ -152,8 +152,6 @@ export const integrationCategories: {
         bgColor: "bg-indigo-500/10",
         iconColor: "text-indigo-500",
         link: "/integrations/discord",
-        disabled: true,
-        status: "Pronto",
         provider: "discord",
       },
       {
