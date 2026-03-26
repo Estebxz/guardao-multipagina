@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
+import { Analytics } from "@vercel/analytics/next"
 import { AnnouncementBar } from "@common/announcement-bar";
 
 export const metadata: Metadata = {
@@ -76,6 +77,7 @@ export default function RootLayout({
           <AnnouncementBar />
           {children}
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
